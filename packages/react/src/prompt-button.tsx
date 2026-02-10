@@ -155,15 +155,16 @@ export function PromptButton({
       <button
         ref={triggerRef}
         data-promptthis-trigger=""
+        {...(!label && { "data-promptthis-icon-only": "" })}
         className={className}
         type="button"
-        aria-label={`${label}: send to AI`}
+        aria-label={label ? `${label}: send to AI` : "Send to AI"}
         aria-expanded={isOpen}
         aria-haspopup="menu"
         onClick={() => setIsOpen(!isOpen)}
       >
         {icon || <SparkleIcon />}
-        <span>{label}</span>
+        {label && <span>{label}</span>}
       </button>
 
       {isOpen && (

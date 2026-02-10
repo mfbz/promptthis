@@ -15,6 +15,14 @@ describe("PromptButton", () => {
     expect(screen.getByText("Share")).toBeTruthy();
   });
 
+  it("renders icon-only when label is empty", () => {
+    render(<PromptButton content="Test" label="" />);
+    const btn = screen.getByRole("button");
+    expect(btn.querySelector("span")).toBeNull();
+    expect(btn.getAttribute("data-promptthis-icon-only")).toBe("");
+    expect(btn.getAttribute("aria-label")).toBe("Send to AI");
+  });
+
   it("shows popover on click", () => {
     render(<PromptButton content="Test" />);
     fireEvent.click(screen.getByRole("button"));

@@ -2,7 +2,7 @@
 
 > The share button, but for AI.
 
-Think ShareThis or AddToAny, but for AI tools instead of social networks. You embed a button, craft the prompt, and your visitors copy it or open it directly in Claude, ChatGPT, Gemini, or Perplexity. One click.
+The share button, but for AI. You embed a button, craft the prompt, and your visitors copy it or open it directly in Claude, ChatGPT, Gemini, or Perplexity. One click.
 
 Under 8KB minified + gzipped. Zero dependencies.
 
@@ -58,7 +58,7 @@ A button appears on hover. Click it. Pick an AI tool. Done.
 | `context`          | `string`                           | -             | Additional context prepended before content                                         |
 | `instruction`      | `string`                           | -             | Instruction appended after content                                                  |
 | `openIn`           | `string[]`                         | all providers | Filter which AI tools to show (`'claude'`, `'chatgpt'`, `'gemini'`, `'perplexity'`) |
-| `label`            | `string`                           | `'Prompt'`    | Button label text                                                                   |
+| `label`            | `string`                           | `'Prompt'`    | Button label text. Pass `""` for icon-only                                          |
 | `icon`             | `ReactNode`                        | sparkle icon  | Custom icon element                                                                 |
 | `className`        | `string`                           | -             | Class for the trigger button                                                        |
 | `popoverClassName` | `string`                           | -             | Class for the popover menu                                                          |
@@ -112,7 +112,7 @@ Props: `openIn`, `defaultRole`, `defaultContext`, `defaultInstruction`, `customP
 | `data-prompt`           | Yes      | Marks element as promptable. Value becomes the instruction (empty = default) |
 | `data-prompt-role`      | No       | System role preamble                                                         |
 | `data-prompt-context`   | No       | Additional context before content                                            |
-| `data-prompt-action`    | No       | Button label (default: "Prompt")                                             |
+| `data-prompt-action`    | No       | Button label (default: "Prompt"). Set to `""` for icon-only                  |
 | `data-prompt-open-in`   | No       | Comma-separated provider IDs                                                 |
 | `data-prompt-copy-only` | No       | Only show "Copy prompt" (no AI tool links)                                   |
 

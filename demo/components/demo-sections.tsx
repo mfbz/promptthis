@@ -7,11 +7,11 @@ import { CodeBlock } from "@/components/code-block";
 import { Zap } from "pixelarticons/fonts/react/Zap";
 import { Copy } from "pixelarticons/fonts/react/Copy";
 
-const SAMPLE_CONTENT = `Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite: you embed a button, craft the prompt, and visitors open it directly in their own AI tool. Like ShareThis, but for AI. Under 8KB, zero dependencies.`;
+const SAMPLE_CONTENT = `Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite: you embed a button, craft the prompt, and visitors open it directly in their own AI tool. The share button, but for AI. Under 8KB, zero dependencies.`;
 
 export { SAMPLE_CONTENT };
 
-const BANNER_PROMPT = `PromptThis is the share button, but for AI. Think ShareThis or AddToAny, but for AI tools instead of social networks.
+const BANNER_PROMPT = `PromptThis is the share button, but for AI. Instead of social networks, it sends content to AI tools.
 
 Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite: it sends content to the user's own AI tool, with author-crafted prompts that make the AI actually useful.
 
@@ -49,7 +49,7 @@ export function HeroBanner() {
     <div className="bg-black text-white px-12 py-10 max-md:px-5">
       <div className="max-w-[800px]">
         <p className="text-[15px] text-white/80 leading-relaxed mb-1">
-          Like ShareThis, but for AI. You embed, you craft the prompt, and
+          The share button, but for AI. You embed, you craft the prompt, and
           visitors copy it or open it in Claude, ChatGPT, Gemini, or Perplexity.
         </p>
         <p className="text-[13px] text-white/40 mb-5">
@@ -130,7 +130,7 @@ export function BasicSection() {
       title="Basic Usage"
       description="Pass your content as a string. Visitors choose to copy the prompt or open it directly in Claude, ChatGPT, Gemini, or Perplexity."
     >
-      <div className="relative p-8 border-2 border-black bg-white mb-0.5 max-md:p-5">
+      <div className="relative p-8 border-2 border-black bg-white mb-8 max-md:p-5">
         <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
           <Zap
             width="12"
@@ -157,18 +157,86 @@ import { PromptButton } from '@promptthis/react'
   );
 }
 
+const ICON_ONLY_DEFAULT_TRIGGER =
+  "inline-flex items-center !gap-0 !p-2 !text-sm !text-black !bg-transparent !border-2 !border-black !rounded-none !opacity-100 !transition-none !transform-none cursor-pointer hover:!bg-black hover:!text-white";
+
+const ICON_ONLY_ROUNDED_TRIGGER =
+  "inline-flex items-center !gap-0 !p-2.5 !text-sm !text-white !bg-linear-to-r !from-violet-500 !to-purple-600 !border-0 !rounded-full !opacity-100 !transition-none !transform-none cursor-pointer !shadow-[0_4px_14px_rgba(124,58,237,0.35)] hover:!from-violet-600 hover:!to-purple-700";
+
+const ICON_ONLY_MINIMAL_TRIGGER =
+  "inline-flex items-center !gap-0 !p-1.5 !text-[13px] !text-gray-600 !bg-gray-50 !border !border-gray-200 !rounded-md !opacity-100 !transition-none !transform-none cursor-pointer !shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:!bg-gray-100 hover:!border-gray-300 hover:!text-gray-900 [&_svg]:!w-3.5 [&_svg]:!h-3.5 [&_svg]:!text-gray-400";
+
+const ICON_ONLY_CYBER_TRIGGER =
+  "inline-flex items-center !gap-0 !p-2 !text-sm !text-cyan-300 !bg-[#0a0a0a] !border !border-cyan-500/30 !rounded-lg !opacity-100 !transition-none !transform-none cursor-pointer !shadow-[0_0_20px_rgba(6,182,212,0.15),inset_0_1px_0_rgba(6,182,212,0.1)] hover:!border-cyan-500/50 hover:!text-cyan-200 [&_svg]:!text-cyan-400";
+
+export function IconOnlySection() {
+  return (
+    <Section
+      id="icon-only"
+      number="02"
+      title="Icon Only"
+      description='Pass label="" to render just the icon. Works with any theme.'
+    >
+      <div className="relative p-8 border-2 border-black bg-white mb-8 max-md:p-5">
+        <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
+          <Zap
+            width="12"
+            height="12"
+            overflow="visible"
+            className="fill-current"
+          />
+          LIVE
+        </div>
+        <p className="text-sm text-neutral-800 leading-relaxed mb-5">
+          {SAMPLE_CONTENT}
+        </p>
+        <div className="flex items-center gap-3">
+          <PromptButton content={SAMPLE_CONTENT} label="" />
+          <PromptButton
+            content={SAMPLE_CONTENT}
+            label=""
+            className={ICON_ONLY_DEFAULT_TRIGGER}
+            popoverClassName={THEME_DEFAULT_POPOVER}
+          />
+          <PromptButton
+            content={SAMPLE_CONTENT}
+            label=""
+            className={ICON_ONLY_ROUNDED_TRIGGER}
+            popoverClassName={THEME_ROUNDED_POPOVER}
+          />
+          <PromptButton
+            content={SAMPLE_CONTENT}
+            label=""
+            className={ICON_ONLY_MINIMAL_TRIGGER}
+            popoverClassName={THEME_MINIMAL_POPOVER}
+          />
+          <PromptButton
+            content={SAMPLE_CONTENT}
+            label=""
+            className={ICON_ONLY_CYBER_TRIGGER}
+            popoverClassName={THEME_CYBER_POPOVER}
+          />
+        </div>
+      </div>
+      <CodeBlock label="React">{`
+<PromptButton content="..." label="" />
+      `}</CodeBlock>
+    </Section>
+  );
+}
+
 export function CustomizedSection() {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
     <Section
       id="customized"
-      number="02"
+      number="03"
       title="Customized Prompts"
       description="Use a ref to extract content from the DOM. Shape the prompt with role, context, and instruction. Choose which providers visitors see with openIn."
     >
       <div
-        className="relative p-8 border-2 border-black bg-white mb-0.5 max-md:p-5"
+        className="relative p-8 border-2 border-black bg-white mb-8 max-md:p-5"
         ref={ref}
       >
         <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
@@ -219,11 +287,11 @@ export function HookSection() {
   return (
     <Section
       id="hook"
-      number="03"
+      number="04"
       title="usePrompt Hook"
       description="Build your own UI around the prompt. The hook gives you the assembled prompt, copy and openIn functions, and the filtered provider list."
     >
-      <div className="relative p-8 border-2 border-black bg-white mb-0.5 max-md:p-5">
+      <div className="relative p-8 border-2 border-black bg-white mb-8 max-md:p-5">
         <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
           <Zap
             width="12"
@@ -304,7 +372,7 @@ export function ThemingSection() {
   return (
     <Section
       id="theming"
-      number="04"
+      number="05"
       title="Theming"
       description="Ships with zero CSS. Style every element (trigger, popover, items, and icons) with className and popoverClassName."
     >
@@ -430,11 +498,11 @@ export function ProviderSection() {
   return (
     <Section
       id="provider"
-      number="05"
+      number="06"
       title="PromptProvider"
       description="Wrap any subtree with shared defaults. Every nested PromptButton and usePrompt inherits the same role, providers, and configuration."
     >
-      <div className="relative p-8 border-2 border-black bg-white mb-0.5 max-md:p-5">
+      <div className="relative p-8 border-2 border-black bg-white mb-8 max-md:p-5">
         <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
           <Zap
             width="12"

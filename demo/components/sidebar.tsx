@@ -6,6 +6,7 @@ import { Zap } from "pixelarticons/fonts/react/Zap";
 import { Sliders } from "pixelarticons/fonts/react/Sliders";
 import { Code } from "pixelarticons/fonts/react/Code";
 import { PaintBucket } from "pixelarticons/fonts/react/PaintBucket";
+import { Coin } from "pixelarticons/fonts/react/Coin";
 import { Section } from "pixelarticons/fonts/react/Section";
 import { Menu } from "pixelarticons/fonts/react/Menu";
 import { ExternalLink } from "pixelarticons/fonts/react/ExternalLink";
@@ -14,6 +15,7 @@ import { Close } from "pixelarticons/fonts/react/Close";
 const NAV_ITEMS = [
   { id: "getting-started", label: "Getting Started", icon: BookOpen },
   { id: "basic", label: "Basic", icon: Zap },
+  { id: "icon-only", label: "Icon Only", icon: Coin },
   { id: "customized", label: "Customized", icon: Sliders },
   { id: "hook", label: "usePrompt Hook", icon: Code },
   { id: "theming", label: "Theming", icon: PaintBucket },

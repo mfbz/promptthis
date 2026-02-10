@@ -28,6 +28,10 @@
   flex-shrink: 0;
 }
 
+[data-promptthis-trigger][data-promptthis-icon-only] {
+  padding: 6px;
+}
+
 [data-promptthis-trigger]:hover {
   opacity: 1;
   transform: scale(1.03);

@@ -6,7 +6,7 @@ PromptThis: "The share button, but for AI."
 
 ## Positioning
 
-Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite, it sends content to the user's own AI tool, with author-crafted prompts. The closest analogy is the social share button (ShareThis, AddToAny), but for AI tools instead of social networks.
+Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite, it sends content to the user's own AI tool, with author-crafted prompts. The closest analogy is the social share button, but for AI tools instead of social networks.
 
 - **Author-side widget**: the content creator embeds the button and crafts the prompt (role, context, instructions)
 - **Exports TO external AI tools**: Claude, ChatGPT, Gemini, Perplexity. Not running AI on-site
@@ -45,7 +45,7 @@ Monorepo with npm workspaces. Three packages:
 - "Provider" is the internal term for AI destinations (Claude, ChatGPT, etc). User-facing prop is `openIn`.
 - React component ships no CSS by default. Users import `@promptthis/react/styles.css` for defaults or style via className.
 - Vanilla embeds CSS automatically (script tag users expect zero setup).
-- Default button: sparkle icon + "Prompt". Inherits page font/color. Not opinionated.
+- Default button: sparkle icon + "Prompt". Pass `label=""` for icon-only. Inherits page font/color. Not opinionated.
 - Popover renders with `data-promptthis-*` attributes for CSS targeting.
 - Core is framework-agnostic. Future Vue/Svelte wrappers import from core.
 
@@ -54,7 +54,7 @@ Monorepo with npm workspaces. Three packages:
 - `demo/` - Next.js App Router app showcasing `@promptthis/react`
 - `npm run demo` - Builds all packages then starts the dev server
 - Geist Pixel + Geist Sans fonts, black/white aesthetic
-- 4 sections: Basic, Customized (ref + role/context), usePrompt hook, PromptProvider
+- 7 sections: Getting Started, Basic, Icon Only, Customized (ref + role/context), usePrompt hook, Theming, PromptProvider
 
 ## Testing
 

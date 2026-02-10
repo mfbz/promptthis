@@ -33,6 +33,7 @@ const STYLES = `
   z-index: 1;
 }
 [data-promptthis-trigger] svg { width: 14px; height: 14px; flex-shrink: 0; }
+[data-promptthis-trigger][data-promptthis-icon-only] { padding: 5px; }
 [data-promptthis-target]:hover > [data-promptthis-trigger],
 [data-promptthis-trigger]:focus-visible {
   opacity: 0.7; pointer-events: auto;
@@ -413,16 +414,23 @@ function initElement(el: HTMLElement) {
   btn.setAttribute("data-promptthis-trigger", "");
   btn.setAttribute("type", "button");
   const label =
-    el.getAttribute("data-prompt-action") || config.label || "Prompt";
-  btn.setAttribute("aria-label", `${label} \u2014 send to AI`);
+    el.getAttribute("data-prompt-action") ?? config.label ?? "Prompt";
+  btn.setAttribute(
+    "aria-label",
+    label ? `${label} \u2014 send to AI` : "Send to AI"
+  );
 
   const svgContainer = document.createElement("span");
   svgContainer.innerHTML = SPARKLE_SVG;
   const svgEl = svgContainer.firstElementChild;
   if (svgEl) btn.appendChild(svgEl);
-  const labelSpan = document.createElement("span");
-  labelSpan.textContent = label;
-  btn.appendChild(labelSpan);
+  if (label) {
+    const labelSpan = document.createElement("span");
+    labelSpan.textContent = label;
+    btn.appendChild(labelSpan);
+  } else {
+    btn.setAttribute("data-promptthis-icon-only", "");
+  }
 
   btn.addEventListener("click", () => {
     const instruction = el.getAttribute("data-prompt") || undefined;

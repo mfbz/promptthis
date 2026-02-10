@@ -3,6 +3,7 @@ import {
   HeroBanner,
   GettingStartedSection,
   BasicSection,
+  IconOnlySection,
   CustomizedSection,
   HookSection,
   ThemingSection,
@@ -38,6 +39,7 @@ export default function DemoPage() {
         <div className="max-w-[800px] px-12 pt-10 pb-30 max-md:px-5 max-md:pt-8 max-md:pb-20">
           <GettingStartedSection />
           <BasicSection />
+          <IconOnlySection />
           <CustomizedSection />
           <HookSection />
           <ThemingSection />
