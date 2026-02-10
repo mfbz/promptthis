@@ -1,7 +1,7 @@
 {
   "name": "@promptthis/react",
   "version": "0.1.0",
-  "description": "React components for PromptThis — PromptButton, usePrompt, PromptProvider.",
+  "description": "React components for PromptThis: PromptButton, usePrompt, PromptProvider.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

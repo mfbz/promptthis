@@ -63,7 +63,12 @@ export function Sidebar() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 h-14 bg-white/90 backdrop-blur-xl border-b border-neutral-200 z-50 items-center justify-between px-5 hidden max-md:flex">
-        <div className="font-pixel text-lg font-black">PromptThis</div>
+        <div className="flex items-center gap-2">
+          <img src="/logo-icon.svg" alt="" width={20} height={20} />
+          <span className="text-[13px] font-bold tracking-tight">
+            promptthis
+          </span>
+        </div>
         <button
           className="flex items-center justify-center w-10 h-10 border border-neutral-200 cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
@@ -106,12 +111,12 @@ export function Sidebar() {
       `}
       >
         <div className="px-6 mb-2">
-          <div className="font-pixel text-[22px] font-black tracking-tight">
-            PromptThis
+          <div className="flex items-center gap-2.5">
+            <img src="/logo-icon.svg" alt="" width={24} height={24} />
+            <span className="text-[15px] font-bold tracking-tight">
+              promptthis
+            </span>
           </div>
-          <p className="text-xs text-neutral-500 mt-1">
-            The share button, but for AI.
-          </p>
         </div>
 
         <nav className="flex-1 py-4" aria-label="Demo sections">
@@ -121,11 +126,11 @@ export function Sidebar() {
               href={`#${id}`}
               onClick={close}
               className={`
-                flex items-center gap-2.5 px-6 py-2.5 text-sm border-l-2 transition-all duration-150
+                flex items-center gap-[18px] px-6 py-2.5 text-sm border-l-2 transition-all duration-150
                 ${
                   activeId === id
-                    ? "text-black font-bold border-l-black bg-neutral-50"
-                    : "text-neutral-500 font-medium border-l-transparent hover:text-black hover:bg-neutral-50"
+                    ? "text-black border-l-black bg-neutral-50"
+                    : "text-neutral-500 border-l-transparent hover:text-black hover:bg-neutral-50"
                 }
               `}
             >
@@ -145,7 +150,7 @@ export function Sidebar() {
             href="https://github.com/mfbz/promptthis"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[13px] text-neutral-500 font-medium hover:text-black transition-colors"
+            className="flex items-center gap-2 text-[13px] text-neutral-500 hover:text-black transition-colors"
           >
             GitHub
             <ExternalLink

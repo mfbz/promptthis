@@ -2,15 +2,15 @@
 
 > The share button, but for AI.
 
-PromptThis adds a prompt button to any content on your site. Visitors click it, pick their AI tool (Claude, ChatGPT, Gemini, Perplexity), and get a perfectly structured prompt — ready to use.
+Think ShareThis or AddToAny, but for AI tools instead of social networks. You embed a button, craft the prompt, and your visitors copy it or open it directly in Claude, ChatGPT, Gemini, or Perplexity. One click.
 
-No API keys. No backend. No chatbot widget. The user's own AI tool, with author-crafted prompts.
+Under 8KB minified + gzipped. Zero dependencies.
 
 ## How it's different
 
-Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite — it sends your content to the user's **own** AI tool. You craft the prompt. They choose the tool. No cost per query, no API keys, no vendor lock-in.
+Every "Ask AI" widget puts a chatbot **on** your site. PromptThis does the opposite, it sends your content **to** the user's own AI tool, with author-crafted prompts that make the AI actually useful. No API keys, no backend, no cost per query. The user gets their preferred tool with their own conversation history.
 
-## Quick Start — React
+## Quick Start: React
 
 ```bash
 npm install @promptthis/react
@@ -34,7 +34,7 @@ function Docs({ content }) {
 }
 ```
 
-## Quick Start — HTML
+## Quick Start: HTML
 
 ```html
 <script src="https://unpkg.com/@promptthis/vanilla@latest/dist/promptthis.global.js"></script>
@@ -54,16 +54,16 @@ A button appears on hover. Click it. Pick an AI tool. Done.
 | Prop               | Type                               | Default       | Description                                                                         |
 | ------------------ | ---------------------------------- | ------------- | ----------------------------------------------------------------------------------- |
 | `content`          | `string \| RefObject<HTMLElement>` | required      | Text or ref to DOM element to extract content from                                  |
-| `role`             | `string`                           | —             | System role preamble (e.g. "You are a senior developer.")                           |
-| `context`          | `string`                           | —             | Additional context prepended before content                                         |
-| `instruction`      | `string`                           | —             | Instruction appended after content                                                  |
+| `role`             | `string`                           | -             | System role preamble (e.g. "You are a senior developer.")                           |
+| `context`          | `string`                           | -             | Additional context prepended before content                                         |
+| `instruction`      | `string`                           | -             | Instruction appended after content                                                  |
 | `openIn`           | `string[]`                         | all providers | Filter which AI tools to show (`'claude'`, `'chatgpt'`, `'gemini'`, `'perplexity'`) |
 | `label`            | `string`                           | `'Prompt'`    | Button label text                                                                   |
 | `icon`             | `ReactNode`                        | sparkle icon  | Custom icon element                                                                 |
-| `className`        | `string`                           | —             | Class for the trigger button                                                        |
-| `popoverClassName` | `string`                           | —             | Class for the popover menu                                                          |
-| `onCopy`           | `(prompt: string) => void`         | —             | Callback when prompt is copied                                                      |
-| `onOpen`           | `(providerId: string) => void`     | —             | Callback when an AI tool is opened                                                  |
+| `className`        | `string`                           | -             | Class for the trigger button                                                        |
+| `popoverClassName` | `string`                           | -             | Class for the popover menu                                                          |
+| `onCopy`           | `(prompt: string) => void`         | -             | Callback when prompt is copied                                                      |
+| `onOpen`           | `(providerId: string) => void`     | -             | Callback when an AI tool is opened                                                  |
 
 ### `usePrompt` Hook
 
@@ -81,10 +81,10 @@ const { prompt, copy, openIn, providers } = usePrompt({
 
 Returns:
 
-- `prompt` — The assembled prompt string
-- `copy()` — Copy prompt to clipboard
-- `openIn(providerId)` — Open prompt in an AI tool
-- `providers` — Array of `{ id, name, icon }` for the filtered providers
+- `prompt` - The assembled prompt string
+- `copy()` - Copy prompt to clipboard
+- `openIn(providerId)` - Open prompt in an AI tool
+- `providers` - Array of `{ id, name, icon }` for the filtered providers
 
 ### `<PromptProvider>`
 
@@ -215,10 +215,13 @@ Add your own AI tool to both React and vanilla:
 ## FAQ
 
 **Why not just let AI tools browse the page?**
-They can. But an author-crafted prompt is always better than what AI extracts on its own. You know the pitfalls, the prerequisites, the ideal way to guide someone.
+They can. But an author-crafted prompt will always be better than what an AI extracts on its own. You know the pitfalls, the prerequisites, the ideal way to guide someone. PromptThis lets you encode that knowledge.
 
 **How is this different from chatbot widgets?**
-Chatbot widgets run AI on your site. PromptThis sends content to the user's own AI tool. No API keys, no backend, no cost per query.
+Chatbot widgets run AI on your site. PromptThis sends content to the user's own AI tool. No API keys, no backend, no cost per query. And the user gets to use their preferred tool with their own conversation history.
+
+**File size?**
+Under 8KB minified + gzipped. Zero dependencies.
 
 **Does this work on mobile?**
 Yes. Bottom sheet on small screens, popover on desktop.
@@ -228,11 +231,11 @@ Yes. Pass a `customProviders` array with `id`, `name`, `icon`, and `url` functio
 
 ## Packages
 
-| Package             | Description                                                   |
-| ------------------- | ------------------------------------------------------------- |
-| `@promptthis/core`  | Pure TypeScript logic — prompt assembly, providers, clipboard |
-| `@promptthis/react` | React components — PromptButton, usePrompt, PromptProvider    |
-| `promptthis`        | Vanilla script tag drop-in — auto-init, embedded CSS          |
+| Package             | Description                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| `@promptthis/core`  | Pure TypeScript logic: prompt assembly, providers, clipboard |
+| `@promptthis/react` | React components: PromptButton, usePrompt, PromptProvider    |
+| `promptthis`        | Vanilla script tag drop-in: auto-init, embedded CSS          |
 
 ## Release
 

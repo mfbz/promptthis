@@ -1,13 +1,24 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistPixelSquare } from "geist/font/pixel";
+import localFont from "next/font/local";
 import "@promptthis/react/styles.css";
 import "./globals.css";
 
+const geistSans = localFont({
+  src: "../../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
+
+const geistPixel = localFont({
+  src: "../../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Square.woff2",
+  variable: "--font-geist-pixel-square",
+  weight: "500",
+});
+
 export const metadata: Metadata = {
-  title: "PromptThis — The share button, but for AI.",
+  title: "PromptThis - The share button, but for AI.",
   description:
-    "Add a prompt button to any content. Visitors pick their AI tool and get a structured prompt — no API keys, no backend, no chatbot.",
+    "Add a prompt button to any content. Visitors pick their AI tool and get a structured prompt. No API keys, no backend, no chatbot.",
   metadataBase: new URL("https://promptthis.dev"),
   icons: {
     icon: [
@@ -17,9 +28,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "PromptThis — The share button, but for AI.",
+    title: "PromptThis - The share button, but for AI.",
     description:
-      "Add a prompt button to any content. Visitors pick their AI tool and get a structured prompt — no API keys, no backend, no chatbot.",
+      "Add a prompt button to any content. Visitors pick their AI tool and get a structured prompt. No API keys, no backend, no chatbot.",
     type: "website",
     siteName: "PromptThis",
     images: [
@@ -33,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PromptThis — The share button, but for AI.",
+    title: "PromptThis - The share button, but for AI.",
     description:
       "Add a prompt button to any content. Visitors pick their AI tool and get a structured prompt.",
     images: ["/banner.png"],
@@ -50,11 +61,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable} ${GeistPixelSquare.variable}`}
-    >
-      <body className="font-sans text-black bg-white antialiased leading-relaxed">
+    <html lang="en" className={`${geistSans.variable} ${geistPixel.variable}`}>
+      <body
+        className={`${geistPixel.className} text-black bg-white antialiased leading-relaxed`}
+      >
         {children}
       </body>
     </html>
