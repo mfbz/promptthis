@@ -5,6 +5,7 @@ import {
   BasicSection,
   CustomizedSection,
   HookSection,
+  ThemingSection,
   ProviderSection,
 } from "@/components/demo-sections";
 import { ExternalLink } from "pixelarticons/fonts/react/ExternalLink";
@@ -41,6 +42,7 @@ export default function DemoPage() {
           <BasicSection />
           <CustomizedSection />
           <HookSection />
+          <ThemingSection />
           <ProviderSection />
 
           <footer className="mt-16 pt-8 border-t border-neutral-200 flex items-center justify-between flex-wrap gap-4 max-md:flex-col max-md:items-start">

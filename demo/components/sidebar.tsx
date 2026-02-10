@@ -5,6 +5,7 @@ import { BookOpen } from "pixelarticons/fonts/react/BookOpen";
 import { Zap } from "pixelarticons/fonts/react/Zap";
 import { Sliders } from "pixelarticons/fonts/react/Sliders";
 import { Code } from "pixelarticons/fonts/react/Code";
+import { PaintBucket } from "pixelarticons/fonts/react/PaintBucket";
 import { Section } from "pixelarticons/fonts/react/Section";
 import { Menu } from "pixelarticons/fonts/react/Menu";
 import { ExternalLink } from "pixelarticons/fonts/react/ExternalLink";
@@ -15,6 +16,7 @@ const NAV_ITEMS = [
   { id: "basic", label: "Basic", icon: Zap },
   { id: "customized", label: "Customized", icon: Sliders },
   { id: "hook", label: "usePrompt Hook", icon: Code },
+  { id: "theming", label: "Theming", icon: PaintBucket },
   { id: "provider", label: "PromptProvider", icon: Section },
 ];
 

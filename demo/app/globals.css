@@ -13,7 +13,7 @@
 }
 
 @layer components {
-  [data-promptthis-trigger] {
+  [data-promptthis-trigger]:not([data-theming-demo] *) {
     font-family: var(--font-sans) !important;
     font-size: 0.875rem;
     font-weight: 700 !important;
@@ -24,24 +24,24 @@
     transition: all 0.15s ease !important;
   }
 
-  [data-promptthis-trigger]:hover {
+  [data-promptthis-trigger]:hover:not([data-theming-demo] *) {
     background: #000 !important;
     color: #fff !important;
     transform: none !important;
   }
 
-  [data-promptthis-trigger]:hover svg {
+  [data-promptthis-trigger]:hover:not([data-theming-demo] *) svg {
     color: #fff;
   }
 
-  [data-promptthis-popover] {
+  [data-promptthis-popover]:not([data-theming-demo] *) {
     border-radius: 0 !important;
     border: 2px solid #000 !important;
     background: #000 !important;
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1) !important;
   }
 
-  [data-promptthis-item] {
+  [data-promptthis-item]:not([data-theming-demo] *) {
     color: #fff !important;
     font-family: var(--font-sans) !important;
     font-size: 0.875rem;
@@ -49,8 +49,8 @@
     padding: 0.75rem 1rem !important;
   }
 
-  [data-promptthis-item]:hover,
-  [data-promptthis-item]:focus-visible {
+  [data-promptthis-item]:hover:not([data-theming-demo] *),
+  [data-promptthis-item]:focus-visible:not([data-theming-demo] *) {
     background: rgba(255, 255, 255, 0.1) !important;
   }
 }
