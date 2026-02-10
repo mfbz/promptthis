@@ -5,6 +5,7 @@ import {
   canUseDeepLink,
   copyToClipboard,
   extractContent,
+  positionPopover,
   type Provider,
 } from "@promptthis/core";
 
@@ -45,7 +46,7 @@ const STYLES = `
 }
 
 [data-promptthis-popover] {
-  position: absolute; top: calc(100% + 4px); right: 0;
+  position: absolute; top: calc(100% + 4px); right: 0; left: auto; bottom: auto;
   min-width: 180px; padding: 4px 0;
   background: var(--promptthis-bg, #fff);
   border: 1px solid var(--promptthis-border, rgba(128,128,128,0.15));
@@ -57,6 +58,17 @@ const STYLES = `
 }
 @keyframes promptthis-fade-in {
   from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+[data-promptthis-popover][data-side="top"] {
+  top: auto; bottom: calc(100% + 4px);
+  animation-name: promptthis-fade-in-up;
+}
+[data-promptthis-popover][data-align="start"] {
+  right: auto; left: 0;
+}
+@keyframes promptthis-fade-in-up {
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -348,6 +360,7 @@ function createPopover(
     document.body.appendChild(popover);
   } else {
     btn.parentElement?.appendChild(popover);
+    positionPopover(btn, popover);
   }
 
   // Keyboard

@@ -2,6 +2,7 @@ import {
   useState,
   useRef,
   useEffect,
+  useLayoutEffect,
   useCallback,
   type ReactNode,
   type RefObject,
@@ -10,6 +11,7 @@ import { usePrompt } from "./use-prompt";
 import { usePromptContext } from "./provider";
 import { SparkleIcon } from "./sparkle-icon";
 import { providerIcons, ClipboardIcon } from "./icons";
+import { positionPopover } from "@promptthis/core";
 
 export interface PromptButtonProps {
   content: string | RefObject<HTMLElement | null>;
@@ -147,6 +149,17 @@ export function PromptButton({
           ?.querySelector<HTMLElement>('[role="menuitem"]')
           ?.focus();
       });
+    }
+  }, [isOpen]);
+
+  useLayoutEffect(() => {
+    if (
+      isOpen &&
+      triggerRef.current &&
+      popoverRef.current &&
+      window.innerWidth > 640
+    ) {
+      positionPopover(triggerRef.current, popoverRef.current);
     }
   }, [isOpen]);
 

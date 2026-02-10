@@ -8,3 +8,6 @@ export { copyToClipboard } from "./clipboard";
 
 export { extractContent } from "./content";
 export type { ExtractOptions } from "./content";
+
+export { positionPopover } from "./position";
+export type { PositionConfig, PositionResult } from "./position";

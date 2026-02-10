@@ -18,6 +18,7 @@ export default defineConfig({
           include: [
             "packages/core/src/__tests__/clipboard.test.ts",
             "packages/core/src/__tests__/content.test.ts",
+            "packages/core/src/__tests__/position.test.ts",
           ],
           environment: "jsdom",
         },
