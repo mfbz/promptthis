@@ -1,0 +1,27 @@
+{
+  "name": "@promptthis/vanilla",
+  "version": "0.1.0",
+  "description": "The share button, but for AI. Drop-in script tag for any website.",
+  "type": "module",
+  "main": "./dist/promptthis.js",
+  "unpkg": "./dist/promptthis.global.js",
+  "jsdelivr": "./dist/promptthis.global.js",
+  "types": "./dist/promptthis.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/promptthis.d.ts",
+      "import": "./dist/promptthis.js",
+      "require": "./dist/promptthis.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@promptthis/core": "^0.1.0"
+  }
+}

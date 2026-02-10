@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  --font-pixel: var(--font-geist-pixel-square), monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+}
+
+@layer components {
+  [data-promptthis-trigger] {
+    font-family: var(--font-sans) !important;
+    font-size: 0.875rem;
+    font-weight: 700 !important;
+    border-radius: 0 !important;
+    border: 2px solid #000 !important;
+    padding: 0.5rem 1rem !important;
+    opacity: 1;
+    transition: all 0.15s ease !important;
+  }
+
+  [data-promptthis-trigger]:hover {
+    background: #000 !important;
+    color: #fff !important;
+    transform: none !important;
+  }
+
+  [data-promptthis-trigger]:hover svg {
+    color: #fff;
+  }
+
+  [data-promptthis-popover] {
+    border-radius: 0 !important;
+    border: 2px solid #000 !important;
+    background: #000 !important;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1) !important;
+  }
+
+  [data-promptthis-item] {
+    color: #fff !important;
+    font-family: var(--font-sans) !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.75rem 1rem !important;
+  }
+
+  [data-promptthis-item]:hover,
+  [data-promptthis-item]:focus-visible {
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
