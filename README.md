@@ -308,11 +308,11 @@ Yes. Pass a `customProviders` array with `id`, `name`, `icon`, and `url` functio
 
 ## Packages
 
-| Package             | Description                                                  |
-| ------------------- | ------------------------------------------------------------ |
-| `@promptthis/core`  | Pure TypeScript logic: prompt assembly, providers, clipboard |
-| `@promptthis/react` | React components: PromptButton, usePrompt, PromptProvider    |
-| `promptthis`        | Vanilla script tag drop-in: auto-init, embedded CSS          |
+| Package               | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| `@promptthis/core`    | Pure TypeScript logic: prompt assembly, providers, clipboard |
+| `@promptthis/react`   | React components: PromptButton, usePrompt, PromptProvider    |
+| `@promptthis/vanilla` | Vanilla script tag drop-in: auto-init, embedded CSS          |
 
 ## Release
 
