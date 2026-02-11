@@ -1,0 +1,54 @@
+{
+  "name": "@promptthis/vanilla",
+  "version": "0.1.0",
+  "description": "The share button, but for AI.",
+  "type": "module",
+  "main": "./dist/promptthis.js",
+  "unpkg": "./dist/promptthis.global.js",
+  "jsdelivr": "./dist/promptthis.global.js",
+  "types": "./dist/promptthis.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/promptthis.d.ts",
+      "import": "./dist/promptthis.js",
+      "require": "./dist/promptthis.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "license": "MIT",
+  "author": "mfbz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mfbz/promptthis",
+    "directory": "packages/vanilla"
+  },
+  "homepage": "https://github.com/mfbz/promptthis#readme",
+  "bugs": {
+    "url": "https://github.com/mfbz/promptthis/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "keywords": [
+    "prompt",
+    "ai",
+    "vanilla",
+    "claude",
+    "chatgpt",
+    "gemini",
+    "perplexity",
+    "llm",
+    "share",
+    "widget",
+    "script"
+  ],
+  "dependencies": {
+    "@promptthis/core": "^0.1.0"
+  }
+}

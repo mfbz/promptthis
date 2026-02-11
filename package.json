@@ -1,0 +1,27 @@
+{
+  "name": "promptthis",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "demo"
+  ],
+  "scripts": {
+    "build": "npm run build -w packages/core && npm run build -w packages/react && npm run build -w packages/vanilla",
+    "demo": "npm run build && npm run dev -w demo",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf packages/*/dist",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run clean && npm run build && npm run test && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.8",
+    "prettier": "^3.7.4",
+    "tsup": "^8.5.1",
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.18"
+  }
+}

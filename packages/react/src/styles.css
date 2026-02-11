@@ -1,0 +1,224 @@
+/* @promptthis/react - Optional default styles */
+/* Import with: import '@promptthis/react/styles.css' */
+/* All rules are in @layer base. Data-attribute selectors beat element-level
+   resets (e.g. Tailwind preflight) via specificity, while @layer components
+   and @layer utilities still override naturally — no !important needed. */
+
+@layer base {
+  [data-promptthis-trigger] {
+    --_pt-bg: var(--promptthis-bg, #f5f5f5);
+    --_pt-text: var(--promptthis-text, inherit);
+    --_pt-border: var(--promptthis-border, rgba(0, 0, 0, 0.08));
+    --_pt-radius: var(--promptthis-radius, 8px);
+    --_pt-px: var(--promptthis-padding-x, 12px);
+    --_pt-py: var(--promptthis-padding-y, 6px);
+    --_pt-gap: var(--promptthis-gap, 6px);
+    --_pt-font-size: var(--promptthis-font-size, 13px);
+    --_pt-opacity: var(--promptthis-opacity, 1);
+    --_pt-shadow: var(--promptthis-shadow, 0 1px 2px rgba(0, 0, 0, 0.04));
+    --_pt-hover-bg: var(--promptthis-hover-bg, #ebebeb);
+    --_pt-hover-text: var(--promptthis-hover-text, inherit);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--_pt-gap);
+    padding: var(--_pt-py) var(--_pt-px);
+    font-family: inherit;
+    font-size: var(--_pt-font-size);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--_pt-text);
+    background: var(--_pt-bg);
+    border: 1px solid var(--_pt-border);
+    border-radius: var(--_pt-radius);
+    cursor: pointer;
+    white-space: nowrap;
+    opacity: var(--_pt-opacity);
+    box-shadow: var(--_pt-shadow);
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+
+  [data-promptthis-trigger] svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  [data-promptthis-trigger][data-promptthis-icon-only] {
+    padding: var(--_pt-py);
+  }
+
+  [data-promptthis-trigger]:hover {
+    background: var(--_pt-hover-bg);
+    color: var(--_pt-hover-text);
+  }
+
+  [data-promptthis-trigger]:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  [data-promptthis-popover] {
+    --_pt-pop-bg: var(--promptthis-popover-bg, #fff);
+    --_pt-pop-border: var(
+      --promptthis-popover-border,
+      rgba(128, 128, 128, 0.15)
+    );
+    --_pt-pop-radius: var(--promptthis-popover-radius, 10px);
+    --_pt-pop-shadow: var(
+      --promptthis-popover-shadow,
+      0 4px 16px rgba(0, 0, 0, 0.08),
+      0 1px 3px rgba(0, 0, 0, 0.05)
+    );
+
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    left: auto;
+    bottom: auto;
+    z-index: 10000;
+    min-width: 180px;
+    padding: 4px 0;
+    background: var(--_pt-pop-bg);
+    border: 1px solid var(--_pt-pop-border);
+    border-radius: var(--_pt-pop-radius);
+    box-shadow: var(--_pt-pop-shadow);
+    font-family: inherit;
+    animation: promptthis-fade-in 0.12s ease;
+  }
+
+  [data-promptthis-popover][data-side="top"] {
+    top: auto;
+    bottom: calc(100% + 4px);
+    animation-name: promptthis-fade-in-up;
+  }
+
+  [data-promptthis-popover][data-align="start"] {
+    right: auto;
+    left: 0;
+  }
+
+  [data-promptthis-item] {
+    --_pt-item-text: var(--promptthis-item-text, #1f2937);
+    --_pt-item-hover-bg: var(
+      --promptthis-item-hover-bg,
+      rgba(128, 128, 128, 0.08)
+    );
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--_pt-item-text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.1s ease;
+  }
+
+  [data-promptthis-item]:hover,
+  [data-promptthis-item]:focus-visible {
+    background: var(--_pt-item-hover-bg);
+  }
+
+  [data-promptthis-item]:focus-visible {
+    outline: none;
+  }
+
+  [data-promptthis-item-icon] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* Dark mode — opt-in via data-theme="dark" ancestor */
+  [data-theme="dark"] [data-promptthis-trigger] {
+    --_pt-bg: var(--promptthis-bg, #2a2a2a);
+    --_pt-border: var(--promptthis-border, rgba(255, 255, 255, 0.1));
+    --_pt-shadow: var(--promptthis-shadow, 0 1px 2px rgba(0, 0, 0, 0.2));
+    --_pt-hover-bg: var(--promptthis-hover-bg, #3a3a3a);
+  }
+  [data-theme="dark"] [data-promptthis-popover] {
+    --_pt-pop-bg: var(--promptthis-popover-bg, #1f2937);
+    --_pt-pop-border: var(
+      --promptthis-popover-border,
+      rgba(255, 255, 255, 0.1)
+    );
+    --_pt-pop-shadow: var(
+      --promptthis-popover-shadow,
+      0 4px 16px rgba(0, 0, 0, 0.3)
+    );
+  }
+  [data-theme="dark"] [data-promptthis-item] {
+    --_pt-item-text: var(--promptthis-item-text, #f9fafb);
+    --_pt-item-hover-bg: var(
+      --promptthis-item-hover-bg,
+      rgba(255, 255, 255, 0.08)
+    );
+  }
+
+  /* Mobile bottom sheet */
+  @media (max-width: 640px) {
+    [data-promptthis-popover] {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: auto;
+      width: 100%;
+      border-radius: 16px 16px 0 0;
+      padding-bottom: env(safe-area-inset-bottom, 8px);
+      animation: promptthis-slide-up 0.2s ease;
+    }
+  }
+}
+
+@keyframes promptthis-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes promptthis-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes promptthis-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Reduced motion — kept outside the layer so it always wins */
+@media (prefers-reduced-motion: reduce) {
+  [data-promptthis-trigger],
+  [data-promptthis-popover],
+  [data-promptthis-item] {
+    transition: none !important;
+    animation: none !important;
+  }
+}
