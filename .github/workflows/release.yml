@@ -44,4 +44,4 @@ jobs:
 
       - name: Publish to npm
         if: steps.changesets.outputs.hasChangesets == 'false'
-        run: npm run clean && npm run build && npm run test && changeset publish
+        run: npm run clean && npm run build && npm run test && npx changeset publish
