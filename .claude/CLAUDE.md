@@ -32,13 +32,14 @@ Monorepo with npm workspaces. Three packages:
 
 ## Release
 
-- `npm run version:patch` - Bump all packages patch (0.1.0 → 0.1.1)
-- `npm run version:minor` - Bump all packages minor (0.1.0 → 0.2.0)
-- `npm run version:major` - Bump all packages major (0.1.0 → 1.0.0)
-- `npm run release` - Clean, build, test, then publish all packages to npm (core first, then react + vanilla)
-- All packages are published with `--access public` (scoped packages require this)
-- Publish order: core → react → vanilla (react and vanilla depend on core)
-- After bumping versions, update the `@promptthis/core` dependency version in `packages/react/package.json` and `packages/vanilla/package.json` to match
+Uses [Changesets](https://github.com/changesets/changesets) for versioning and publishing. All three packages use **fixed** versioning (they always share the same version number). Changesets handles dependency bumping automatically.
+
+- `npx changeset` - Create a changeset (describe what changed, pick bump type)
+- `npm run version` - Consume changesets: bump versions, update internal deps, generate CHANGELOGs
+- `npm run release` - Clean, build, test, then publish all packages to npm in dependency order
+- Config: `.changeset/config.json` (fixed versioning, public access, `main` base branch)
+- All packages are published with `--access public` (configured in changeset config)
+- Publish order is automatic: core → react → vanilla (topological)
 
 ## Key Design Decisions
 

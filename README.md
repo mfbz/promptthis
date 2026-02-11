@@ -316,21 +316,26 @@ Yes. Pass a `customProviders` array with `id`, `name`, `icon`, and `url` functio
 
 ## Release
 
-Bump versions across all packages, then publish to npm:
+Uses [Changesets](https://github.com/changesets/changesets) for versioning and publishing. All packages share the same version number (fixed mode).
 
 ```bash
-# Bump version (pick one)
-npm run version:patch   # 0.1.0 → 0.1.1
-npm run version:minor   # 0.1.0 → 0.2.0
-npm run version:major   # 0.1.0 → 1.0.0
+# 1. After making changes, create a changeset
+npx changeset
+# Interactive prompt: which packages changed? patch/minor/major? summary?
 
-# Publish (clean → build → test → publish core → react → vanilla)
+# 2. When ready to release, apply version bumps + generate CHANGELOGs
+npm run version
+
+# 3. Publish to npm (clean → build → test → publish)
 npm run release
 ```
 
-Packages are published in dependency order: `@promptthis/core` first, then `@promptthis/react` and `@promptthis/vanilla`.
+Changesets automatically handles:
 
-> After bumping versions, update the `@promptthis/core` dependency in `packages/react/package.json` and `packages/vanilla/package.json` to match the new version before publishing.
+- Bumping all packages to the same version (fixed mode)
+- Updating internal `@promptthis/core` dependency in react and vanilla
+- Publishing in dependency order (core → react → vanilla)
+- Generating `CHANGELOG.md` for each package
 
 ## Demo
 
