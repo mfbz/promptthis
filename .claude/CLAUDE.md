@@ -64,7 +64,7 @@ Uses npm Trusted Publishing (OIDC) — no tokens or secrets needed. Each package
 - Custom providers with the same `id` as a default provider override it (custom-first dedup).
 - Prompt content uses `<content>` XML tags (not `---` delimiters).
 - Popover renders with `data-promptthis-*` attributes for CSS targeting.
-- Dark mode: `@media (prefers-color-scheme: dark)` + `[data-theme="dark"]` ancestor.
+- Dark mode: opt-in only via `[data-theme="dark"]` ancestor. No auto-detection from OS preference.
 - Core is framework-agnostic. Future Vue/Svelte wrappers import from core.
 
 ## Demo
