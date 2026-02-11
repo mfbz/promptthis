@@ -1,19 +1,19 @@
 "use client";
 
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { PromptButton, usePrompt, PromptProvider } from "@promptthis/react";
 import { Section } from "@/components/section";
 import { CodeBlock } from "@/components/code-block";
 import { Zap } from "pixelarticons/fonts/react/Zap";
 import { Copy } from "pixelarticons/fonts/react/Copy";
 
-const SAMPLE_CONTENT = `Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite: you embed a button, craft the prompt, and visitors open it directly in their own AI tool. The share button, but for AI. Under 8KB, zero dependencies.`;
+const SAMPLE_CONTENT = `Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite: you embed a button, craft the prompt, and visitors open it directly in their own AI provider. The share button, but for AI. Under 8KB, zero dependencies.`;
 
 export { SAMPLE_CONTENT };
 
-const BANNER_PROMPT = `PromptThis is the share button, but for AI. Instead of social networks, it sends content to AI tools.
+const BANNER_PROMPT = `PromptThis is the share button, but for AI. Instead of social networks, it sends content to AI providers.
 
-Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite: it sends content to the user's own AI tool, with author-crafted prompts that make the AI actually useful.
+Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite: it sends content to the user's own AI provider, with author-crafted prompts that make the AI actually useful.
 
 INSTALL: npm install @promptthis/react
 
@@ -26,11 +26,11 @@ import '@promptthis/react/styles.css'
 HOW IT WORKS:
 1. You embed a PromptButton next to any content
 2. You craft the prompt: role, context, instruction
-3. Visitor clicks, picks their AI tool (Claude, ChatGPT, Gemini, Perplexity)
+3. Visitor clicks, picks their AI provider (Claude, ChatGPT, Gemini, Perplexity)
 4. Prompt opens directly in that tool or gets copied to clipboard
 
 WHY AUTHOR-CRAFTED PROMPTS?
-AI tools can browse your page, but an author-crafted prompt is always better. You know the pitfalls, the prerequisites, the ideal way to guide someone. PromptThis lets you encode that knowledge.
+AI providers can browse your page, but an author-crafted prompt is always better. You know the pitfalls, the prerequisites, the ideal way to guide someone. PromptThis lets you encode that knowledge.
 
 KEY FEATURES:
 - Under 8KB minified + gzipped, zero dependencies
@@ -59,8 +59,27 @@ export function HeroBanner() {
           content={BANNER_PROMPT}
           role="You are a helpful coding assistant who specializes in React libraries."
           instruction="Help me integrate PromptThis into my project. Walk me through setup, basic usage, and any customization options."
-          className="inline-flex items-center !gap-1.5 !px-4 !py-2 !text-sm !text-black !bg-white !border-2 !border-white !rounded-none !opacity-100 !transition-all !transform-none cursor-pointer hover:!bg-transparent hover:!text-white"
-          popoverClassName="!bg-white !border-2 !border-white !rounded-none !shadow-[4px_4px_0_rgba(255,255,255,0.1)] [&_[data-promptthis-item]]:!text-black [&_[data-promptthis-item]]:!px-4 [&_[data-promptthis-item]]:!py-3 [&_[data-promptthis-item]:hover]:!bg-black/5"
+          style={
+            {
+              "--promptthis-bg": "white",
+              "--promptthis-text": "black",
+              "--promptthis-border": "white",
+              "--promptthis-radius": "0px",
+              "--promptthis-hover-bg": "transparent",
+              "--promptthis-hover-text": "white",
+              "--promptthis-shadow": "none",
+            } as React.CSSProperties
+          }
+          popoverStyle={
+            {
+              "--promptthis-popover-bg": "white",
+              "--promptthis-popover-border": "white",
+              "--promptthis-popover-radius": "0px",
+              "--promptthis-popover-shadow": "4px 4px 0 rgba(255,255,255,0.1)",
+              "--promptthis-item-text": "black",
+              "--promptthis-item-hover-bg": "rgba(0,0,0,0.05)",
+            } as React.CSSProperties
+          }
           label="Try it: prompt this library"
         />
       </div>
@@ -157,17 +176,50 @@ import { PromptButton } from '@promptthis/react'
   );
 }
 
-const ICON_ONLY_DEFAULT_TRIGGER =
-  "inline-flex items-center !gap-0 !p-2 !text-sm !text-black !bg-transparent !border-2 !border-black !rounded-none !opacity-100 !transition-none !transform-none cursor-pointer hover:!bg-black hover:!text-white";
+const ICON_ONLY_DEFAULT_STYLE = {
+  "--promptthis-bg": "transparent",
+  "--promptthis-text": "black",
+  "--promptthis-border": "black",
+  "--promptthis-radius": "0px",
+  "--promptthis-hover-bg": "black",
+  "--promptthis-hover-text": "white",
+  "--promptthis-shadow": "none",
+  "--promptthis-padding-y": "8px",
+} as React.CSSProperties;
 
-const ICON_ONLY_ROUNDED_TRIGGER =
-  "inline-flex items-center !gap-0 !p-2.5 !text-sm !text-white !bg-linear-to-r !from-violet-500 !to-purple-600 !border-0 !rounded-full !opacity-100 !transition-none !transform-none cursor-pointer !shadow-[0_4px_14px_rgba(124,58,237,0.35)] hover:!from-violet-600 hover:!to-purple-700";
+const ICON_ONLY_ROUNDED_STYLE = {
+  "--promptthis-bg": "linear-gradient(to right, #8b5cf6, #9333ea)",
+  "--promptthis-text": "white",
+  "--promptthis-border": "transparent",
+  "--promptthis-radius": "9999px",
+  "--promptthis-hover-bg": "linear-gradient(to right, #7c3aed, #7e22ce)",
+  "--promptthis-hover-text": "white",
+  "--promptthis-shadow": "0 4px 14px rgba(124,58,237,0.35)",
+  "--promptthis-padding-y": "10px",
+} as React.CSSProperties;
 
-const ICON_ONLY_MINIMAL_TRIGGER =
-  "inline-flex items-center !gap-0 !p-1.5 !text-[13px] !text-gray-600 !bg-gray-50 !border !border-gray-200 !rounded-md !opacity-100 !transition-none !transform-none cursor-pointer !shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:!bg-gray-100 hover:!border-gray-300 hover:!text-gray-900 [&_svg]:!w-3.5 [&_svg]:!h-3.5 [&_svg]:!text-gray-400";
+const ICON_ONLY_MINIMAL_STYLE = {
+  "--promptthis-bg": "#f9fafb",
+  "--promptthis-text": "#4b5563",
+  "--promptthis-border": "#e5e7eb",
+  "--promptthis-radius": "6px",
+  "--promptthis-hover-bg": "#f3f4f6",
+  "--promptthis-hover-text": "#111827",
+  "--promptthis-shadow": "0 1px 2px rgba(0,0,0,0.04)",
+  "--promptthis-padding-y": "6px",
+} as React.CSSProperties;
 
-const ICON_ONLY_CYBER_TRIGGER =
-  "inline-flex items-center !gap-0 !p-2 !text-sm !text-cyan-300 !bg-[#0a0a0a] !border !border-cyan-500/30 !rounded-lg !opacity-100 !transition-none !transform-none cursor-pointer !shadow-[0_0_20px_rgba(6,182,212,0.15),inset_0_1px_0_rgba(6,182,212,0.1)] hover:!border-cyan-500/50 hover:!text-cyan-200 [&_svg]:!text-cyan-400";
+const ICON_ONLY_CYBER_STYLE = {
+  "--promptthis-bg": "#0a0a0a",
+  "--promptthis-text": "#67e8f9",
+  "--promptthis-border": "rgba(6,182,212,0.3)",
+  "--promptthis-radius": "8px",
+  "--promptthis-hover-bg": "#0a0a0a",
+  "--promptthis-hover-text": "#a5f3fc",
+  "--promptthis-shadow":
+    "0 0 20px rgba(6,182,212,0.15), inset 0 1px 0 rgba(6,182,212,0.1)",
+  "--promptthis-padding-y": "8px",
+} as React.CSSProperties;
 
 export function IconOnlySection() {
   return (
@@ -175,7 +227,7 @@ export function IconOnlySection() {
       id="icon-only"
       number="02"
       title="Icon Only"
-      description='Pass label="" to render just the icon. Works with any theme.'
+      description="Pass label={null} to render just the icon. Works with any theme."
     >
       <div className="relative p-8 border-2 border-black bg-white mb-8 max-md:p-5">
         <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
@@ -191,35 +243,35 @@ export function IconOnlySection() {
           {SAMPLE_CONTENT}
         </p>
         <div className="flex items-center gap-3">
-          <PromptButton content={SAMPLE_CONTENT} label="" />
+          <PromptButton content={SAMPLE_CONTENT} label={null} />
           <PromptButton
             content={SAMPLE_CONTENT}
-            label=""
-            className={ICON_ONLY_DEFAULT_TRIGGER}
-            popoverClassName={THEME_DEFAULT_POPOVER}
+            label={null}
+            style={ICON_ONLY_DEFAULT_STYLE}
+            popoverStyle={THEME_DEFAULT_POPOVER_STYLE}
           />
           <PromptButton
             content={SAMPLE_CONTENT}
-            label=""
-            className={ICON_ONLY_ROUNDED_TRIGGER}
-            popoverClassName={THEME_ROUNDED_POPOVER}
+            label={null}
+            style={ICON_ONLY_ROUNDED_STYLE}
+            popoverStyle={THEME_ROUNDED_POPOVER_STYLE}
           />
           <PromptButton
             content={SAMPLE_CONTENT}
-            label=""
-            className={ICON_ONLY_MINIMAL_TRIGGER}
-            popoverClassName={THEME_MINIMAL_POPOVER}
+            label={null}
+            style={ICON_ONLY_MINIMAL_STYLE}
+            popoverStyle={THEME_MINIMAL_POPOVER_STYLE}
           />
           <PromptButton
             content={SAMPLE_CONTENT}
-            label=""
-            className={ICON_ONLY_CYBER_TRIGGER}
-            popoverClassName={THEME_CYBER_POPOVER}
+            label={null}
+            style={ICON_ONLY_CYBER_STYLE}
+            popoverStyle={THEME_CYBER_POPOVER_STYLE}
           />
         </div>
       </div>
       <CodeBlock label="React">{`
-<PromptButton content="..." label="" />
+<PromptButton content="..." label={null} />
       `}</CodeBlock>
     </Section>
   );
@@ -348,25 +400,90 @@ const { copy, openIn, providers } = usePrompt({
   );
 }
 
-const THEME_DEFAULT_TRIGGER =
-  "inline-flex items-center !gap-1.5 !px-4 !py-2 !text-sm !text-black !bg-transparent !border-2 !border-black !rounded-none !opacity-100 !transition-none !transform-none cursor-pointer hover:!bg-black hover:!text-white";
-const THEME_DEFAULT_POPOVER =
-  "!bg-black !border-2 !border-black !rounded-none !shadow-[4px_4px_0_rgba(0,0,0,0.1)] [&_[data-promptthis-item]]:!text-white [&_[data-promptthis-item]]:!px-4 [&_[data-promptthis-item]]:!py-3 [&_[data-promptthis-item]:hover]:!bg-white/10 [&_[data-promptthis-item]:focus-visible]:!bg-white/10";
+const THEME_DEFAULT_STYLE = {
+  "--promptthis-bg": "transparent",
+  "--promptthis-text": "black",
+  "--promptthis-border": "black",
+  "--promptthis-radius": "0px",
+  "--promptthis-hover-bg": "black",
+  "--promptthis-hover-text": "white",
+  "--promptthis-shadow": "none",
+  "--promptthis-padding-x": "16px",
+  "--promptthis-padding-y": "8px",
+} as React.CSSProperties;
+const THEME_DEFAULT_POPOVER_STYLE = {
+  "--promptthis-popover-bg": "black",
+  "--promptthis-popover-border": "black",
+  "--promptthis-popover-radius": "0px",
+  "--promptthis-popover-shadow": "4px 4px 0 rgba(0,0,0,0.1)",
+  "--promptthis-item-text": "white",
+  "--promptthis-item-hover-bg": "rgba(255,255,255,0.1)",
+} as React.CSSProperties;
 
-const THEME_ROUNDED_TRIGGER =
-  "inline-flex items-center !gap-1.5 !px-5 !py-2.5 !text-sm !text-white !bg-linear-to-r !from-violet-500 !to-purple-600 !border-0 !rounded-full !opacity-100 !transition-none !transform-none cursor-pointer !shadow-[0_4px_14px_rgba(124,58,237,0.35)] hover:!from-violet-600 hover:!to-purple-700 hover:!shadow-[0_6px_20px_rgba(124,58,237,0.5)]";
-const THEME_ROUNDED_POPOVER =
-  "!bg-white !border !border-violet-100 !rounded-2xl !shadow-xl [&_[data-promptthis-item]]:!text-gray-700 [&_[data-promptthis-item]]:!rounded-xl [&_[data-promptthis-item]]:!mx-1.5 [&_[data-promptthis-item]]:!my-0.5 [&_[data-promptthis-item]:hover]:!bg-violet-50 [&_[data-promptthis-item]:hover]:!text-violet-700 [&_[data-promptthis-item]:focus-visible]:!bg-violet-50 [&_[data-promptthis-item-icon]]:!text-violet-500";
+const THEME_ROUNDED_STYLE = {
+  "--promptthis-bg": "linear-gradient(to right, #8b5cf6, #9333ea)",
+  "--promptthis-text": "white",
+  "--promptthis-border": "transparent",
+  "--promptthis-radius": "9999px",
+  "--promptthis-shadow": "0 4px 14px rgba(124,58,237,0.35)",
+  "--promptthis-hover-bg": "linear-gradient(to right, #7c3aed, #7e22ce)",
+  "--promptthis-hover-text": "white",
+  "--promptthis-padding-x": "20px",
+  "--promptthis-padding-y": "10px",
+} as React.CSSProperties;
+const THEME_ROUNDED_POPOVER_STYLE = {
+  "--promptthis-popover-bg": "white",
+  "--promptthis-popover-border": "#ede9fe",
+  "--promptthis-popover-radius": "16px",
+  "--promptthis-popover-shadow":
+    "0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1)",
+  "--promptthis-item-text": "#374151",
+  "--promptthis-item-hover-bg": "#f5f3ff",
+} as React.CSSProperties;
 
-const THEME_MINIMAL_TRIGGER =
-  "inline-flex items-center !gap-1.5 !px-3 !py-1.5 !text-[13px] !text-gray-600 !bg-gray-50 !border !border-gray-200 !rounded-md !opacity-100 !transition-none !transform-none cursor-pointer !shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:!bg-gray-100 hover:!border-gray-300 hover:!text-gray-900 [&_svg]:!w-3.5 [&_svg]:!h-3.5 [&_svg]:!text-gray-400";
-const THEME_MINIMAL_POPOVER =
-  "!bg-white !border !border-gray-200 !rounded-lg !shadow-md !p-1 [&_[data-promptthis-item]]:!text-gray-600 [&_[data-promptthis-item]]:!text-[13px] [&_[data-promptthis-item]]:!rounded [&_[data-promptthis-item]]:!px-2.5 [&_[data-promptthis-item]]:!py-2 [&_[data-promptthis-item]:hover]:!bg-gray-100 [&_[data-promptthis-item]:hover]:!text-gray-900 [&_[data-promptthis-item]:focus-visible]:!bg-gray-100 [&_[data-promptthis-item-icon]]:!text-gray-400 [&_[data-promptthis-item-icon]]:!w-4 [&_[data-promptthis-item-icon]]:!text-[13px]";
+const THEME_MINIMAL_STYLE = {
+  "--promptthis-bg": "#f9fafb",
+  "--promptthis-text": "#4b5563",
+  "--promptthis-border": "#e5e7eb",
+  "--promptthis-radius": "6px",
+  "--promptthis-shadow": "0 1px 2px rgba(0,0,0,0.04)",
+  "--promptthis-hover-bg": "#f3f4f6",
+  "--promptthis-hover-text": "#111827",
+  "--promptthis-padding-x": "12px",
+  "--promptthis-padding-y": "6px",
+  "--promptthis-font-size": "13px",
+} as React.CSSProperties;
+const THEME_MINIMAL_POPOVER_STYLE = {
+  "--promptthis-popover-bg": "white",
+  "--promptthis-popover-border": "#e5e7eb",
+  "--promptthis-popover-radius": "8px",
+  "--promptthis-popover-shadow":
+    "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1)",
+  "--promptthis-item-text": "#4b5563",
+  "--promptthis-item-hover-bg": "#f3f4f6",
+} as React.CSSProperties;
 
-const THEME_CYBER_TRIGGER =
-  "inline-flex items-center !gap-1.5 !px-4 !py-2 !text-sm !text-cyan-300 !bg-[#0a0a0a] !border !border-cyan-500/30 !rounded-lg !opacity-100 !transition-none !transform-none cursor-pointer !shadow-[0_0_20px_rgba(6,182,212,0.15),inset_0_1px_0_rgba(6,182,212,0.1)] hover:!border-cyan-500/50 hover:!text-cyan-200 hover:!shadow-[0_0_30px_rgba(6,182,212,0.25),inset_0_1px_0_rgba(6,182,212,0.15)] [&_svg]:!text-cyan-400";
-const THEME_CYBER_POPOVER =
-  "!bg-[#0a0a0a] !border !border-cyan-500/20 !rounded-xl !shadow-[0_8px_32px_rgba(0,0,0,0.5),0_0_20px_rgba(6,182,212,0.08)] [&_[data-promptthis-item]]:!text-gray-300 [&_[data-promptthis-item]:hover]:!bg-cyan-500/10 [&_[data-promptthis-item]:hover]:!text-cyan-300 [&_[data-promptthis-item]:focus-visible]:!bg-cyan-500/10 [&_[data-promptthis-item-icon]]:!text-cyan-500";
+const THEME_CYBER_STYLE = {
+  "--promptthis-bg": "#0a0a0a",
+  "--promptthis-text": "#67e8f9",
+  "--promptthis-border": "rgba(6,182,212,0.3)",
+  "--promptthis-radius": "8px",
+  "--promptthis-shadow":
+    "0 0 20px rgba(6,182,212,0.15), inset 0 1px 0 rgba(6,182,212,0.1)",
+  "--promptthis-hover-bg": "#0a0a0a",
+  "--promptthis-hover-text": "#a5f3fc",
+  "--promptthis-padding-x": "16px",
+  "--promptthis-padding-y": "8px",
+} as React.CSSProperties;
+const THEME_CYBER_POPOVER_STYLE = {
+  "--promptthis-popover-bg": "#0a0a0a",
+  "--promptthis-popover-border": "rgba(6,182,212,0.2)",
+  "--promptthis-popover-radius": "12px",
+  "--promptthis-popover-shadow":
+    "0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(6,182,212,0.08)",
+  "--promptthis-item-text": "#d1d5db",
+  "--promptthis-item-hover-bg": "rgba(6,182,212,0.1)",
+} as React.CSSProperties;
 
 export function ThemingSection() {
   return (
@@ -374,7 +491,7 @@ export function ThemingSection() {
       id="theming"
       number="05"
       title="Theming"
-      description="Ships with zero CSS. Style every element (trigger, popover, items, and icons) with className and popoverClassName."
+      description="Style with CSS custom properties via style and popoverStyle. No !important needed."
     >
       <div data-theming-demo="" className="flex flex-col gap-6">
         <div className="grid grid-cols-2 gap-0.5 max-sm:grid-cols-1">
@@ -396,8 +513,8 @@ export function ThemingSection() {
             </p>
             <PromptButton
               content={SAMPLE_CONTENT}
-              className={THEME_DEFAULT_TRIGGER}
-              popoverClassName={THEME_DEFAULT_POPOVER}
+              style={THEME_DEFAULT_STYLE}
+              popoverStyle={THEME_DEFAULT_POPOVER_STYLE}
             />
           </div>
 
@@ -419,8 +536,8 @@ export function ThemingSection() {
             </p>
             <PromptButton
               content={SAMPLE_CONTENT}
-              className={THEME_ROUNDED_TRIGGER}
-              popoverClassName={THEME_ROUNDED_POPOVER}
+              style={THEME_ROUNDED_STYLE}
+              popoverStyle={THEME_ROUNDED_POPOVER_STYLE}
             />
           </div>
 
@@ -442,8 +559,8 @@ export function ThemingSection() {
             </p>
             <PromptButton
               content={SAMPLE_CONTENT}
-              className={THEME_MINIMAL_TRIGGER}
-              popoverClassName={THEME_MINIMAL_POPOVER}
+              style={THEME_MINIMAL_STYLE}
+              popoverStyle={THEME_MINIMAL_POPOVER_STYLE}
             />
           </div>
 
@@ -465,28 +582,28 @@ export function ThemingSection() {
             </p>
             <PromptButton
               content={SAMPLE_CONTENT}
-              className={THEME_CYBER_TRIGGER}
-              popoverClassName={THEME_CYBER_POPOVER}
+              style={THEME_CYBER_STYLE}
+              popoverStyle={THEME_CYBER_POPOVER_STYLE}
             />
           </div>
         </div>
         <CodeBlock label="React">{`
-// Use ! prefix to override styles.css defaults
+// Use CSS custom properties via style and popoverStyle
 <PromptButton
   content="..."
-  className="!text-white
-    !bg-linear-to-r !from-violet-500 !to-purple-600
-    !border-0 !rounded-full !opacity-100
-    !shadow-[0_4px_14px_rgba(124,58,237,0.35)]
-    hover:!from-violet-600 hover:!to-purple-700"
-  popoverClassName="!bg-white !rounded-2xl !shadow-xl
-    !border !border-violet-100
-    [&_[data-promptthis-item]]:!text-gray-700
-    [&_[data-promptthis-item]]:!rounded-xl
-    [&_[data-promptthis-item]]:!mx-1.5
-    [&_[data-promptthis-item]:hover]:!bg-violet-50
-    [&_[data-promptthis-item]:hover]:!text-violet-700
-    [&_[data-promptthis-item-icon]]:!text-violet-500"
+  style={{
+    "--promptthis-bg": "transparent",
+    "--promptthis-text": "black",
+    "--promptthis-border": "black",
+    "--promptthis-radius": "0px",
+    "--promptthis-hover-bg": "black",
+    "--promptthis-hover-text": "white",
+  }}
+  popoverStyle={{
+    "--promptthis-popover-bg": "black",
+    "--promptthis-item-text": "white",
+    "--promptthis-item-hover-bg": "rgba(255,255,255,0.1)",
+  }}
 />
         `}</CodeBlock>
       </div>

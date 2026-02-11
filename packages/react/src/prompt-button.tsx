@@ -6,6 +6,7 @@ import {
   useCallback,
   type ReactNode,
   type RefObject,
+  type CSSProperties,
 } from "react";
 import { usePrompt } from "./use-prompt";
 import { usePromptContext } from "./provider";
@@ -19,10 +20,13 @@ export interface PromptButtonProps {
   context?: string;
   instruction?: string;
   openIn?: string[];
-  label?: string;
+  label?: string | null;
   icon?: ReactNode;
   className?: string;
   popoverClassName?: string;
+  style?: CSSProperties;
+  popoverStyle?: CSSProperties;
+  copyLabel?: string;
   onCopy?: (prompt: string) => void;
   onOpen?: (providerId: string) => void;
 }
@@ -37,10 +41,15 @@ export function PromptButton({
   icon,
   className = "",
   popoverClassName = "",
+  style,
+  popoverStyle,
+  copyLabel: copyLabelProp,
   onCopy,
   onOpen,
 }: PromptButtonProps) {
   const ctx = usePromptContext();
+  const resolvedCopyLabel = copyLabelProp ?? ctx.copyLabel ?? "Copy";
+  const showLabel = label !== null && label !== "";
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [announcement, setAnnouncement] = useState("");
@@ -168,16 +177,17 @@ export function PromptButton({
       <button
         ref={triggerRef}
         data-promptthis-trigger=""
-        {...(!label && { "data-promptthis-icon-only": "" })}
+        {...(!showLabel && { "data-promptthis-icon-only": "" })}
         className={className}
+        style={style}
         type="button"
-        aria-label={label ? `${label}: send to AI` : "Send to AI"}
+        aria-label={showLabel ? `${label}: send to AI` : "Send to AI"}
         aria-expanded={isOpen}
         aria-haspopup="menu"
         onClick={() => setIsOpen(!isOpen)}
       >
         {icon || <SparkleIcon />}
-        {label && <span>{label}</span>}
+        {showLabel && <span>{label}</span>}
       </button>
 
       {isOpen && (
@@ -185,6 +195,7 @@ export function PromptButton({
           ref={popoverRef}
           data-promptthis-popover=""
           className={popoverClassName}
+          style={popoverStyle}
           role="menu"
         >
           <button
@@ -196,7 +207,7 @@ export function PromptButton({
             <span data-promptthis-item-icon="">
               <ClipboardIcon />
             </span>
-            <span>{copied ? "✓ Copied!" : "Copy prompt"}</span>
+            <span>{copied ? "✓ Copied!" : resolvedCopyLabel}</span>
           </button>
           {providers.map((p) => (
             <button

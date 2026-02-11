@@ -6,10 +6,10 @@ PromptThis: "The share button, but for AI."
 
 ## Positioning
 
-Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite, it sends content to the user's own AI tool, with author-crafted prompts. The closest analogy is the social share button, but for AI tools instead of social networks.
+Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite, it sends content to the user's own AI provider, with author-crafted prompts. The closest analogy is the social share button, but for AI providers instead of social networks.
 
 - **Author-side widget**: the content creator embeds the button and crafts the prompt (role, context, instructions)
-- **Exports TO external AI tools**: Claude, ChatGPT, Gemini, Perplexity. Not running AI on-site
+- **Exports TO external AI providers**: Claude, ChatGPT, Gemini, Perplexity. Not running AI on-site
 - **Share sheet UX**: popover on desktop, bottom sheet on mobile
 - **Zero infrastructure**: no API keys, no backend, no accounts, no cost per query
 - **Under 8KB** minified + gzipped, zero dependencies
@@ -20,7 +20,7 @@ Monorepo with npm workspaces. Three packages:
 
 - `packages/core` (`@promptthis/core`): Pure TypeScript logic. No DOM, no framework. Prompt assembly, provider URLs, clipboard.
 - `packages/react` (`@promptthis/react`): React components (PromptButton, usePrompt hook, PromptProvider). Ships zero CSS by default, optional `styles.css`.
-- `packages/vanilla` (`promptthis`): Script tag drop-in. Auto-inits from `data-prompt` attributes. Embeds CSS.
+- `packages/vanilla` (`@promptthis/vanilla`): Script tag drop-in. Auto-inits from `data-prompt` attributes. Embeds CSS.
 
 ## Commands
 
@@ -45,8 +45,15 @@ Monorepo with npm workspaces. Three packages:
 - "Provider" is the internal term for AI destinations (Claude, ChatGPT, etc). User-facing prop is `openIn`.
 - React component ships no CSS by default. Users import `@promptthis/react/styles.css` for defaults or style via className.
 - Vanilla embeds CSS automatically (script tag users expect zero setup).
-- Default button: sparkle icon + "Prompt". Pass `label=""` for icon-only. Inherits page font/color. Not opinionated.
+- Default button: sparkle icon + "Prompt". Pass `label={null}` or `label=""` for icon-only. Inherits page font/color.
+- All default styles live in `@layer promptthis`, so any Tailwind class or custom CSS overrides them without `!important`. Two-tier custom property pattern: private `--_pt-*` variables read from public `--promptthis-*` with defaults.
+- `style` and `popoverStyle` props enable ergonomic CSS variable overrides via inline styles.
+- `copyLabel` prop allows localization. Resolved order: prop > PromptProvider context > default.
+- `createProvider()` helper in core simplifies custom provider creation (template string URLs, optional `formatPrompt`).
+- Custom providers with the same `id` as a default provider override it (custom-first dedup).
+- Prompt content uses `<content>` XML tags (not `---` delimiters).
 - Popover renders with `data-promptthis-*` attributes for CSS targeting.
+- Dark mode: `@media (prefers-color-scheme: dark)` + `[data-theme="dark"]` ancestor.
 - Core is framework-agnostic. Future Vue/Svelte wrappers import from core.
 
 ## Demo
@@ -68,6 +75,6 @@ Monorepo with npm workspaces. Three packages:
 
 ## File Structure
 
-packages/core/src/ - prompt.ts, providers.ts, clipboard.ts, content.ts, index.ts
+packages/core/src/ - prompt.ts, providers.ts, clipboard.ts, content.ts, position.ts, index.ts
 packages/react/src/ - prompt-button.tsx, use-prompt.ts, provider.tsx, sparkle-icon.tsx, icons/, styles.css, index.ts
 packages/vanilla/src/ - promptthis.ts

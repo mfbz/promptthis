@@ -9,24 +9,51 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
+    scrollbar-width: thin;
+    scrollbar-color: #fff #000;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #000;
   }
 }
 
 @layer components {
   [data-promptthis-trigger]:not([data-theming-demo] *) {
-    font-family: var(--font-sans) !important;
+    font-family: var(--font-sans);
     font-size: 0.875rem;
-    border-radius: 0 !important;
-    border: 2px solid #000 !important;
-    padding: 0.5rem 1rem !important;
+    border-radius: 0;
+    border: 2px solid #000;
+    padding: 0.5rem 1rem;
+    background: white;
+    color: black;
     opacity: 1;
-    transition: all 0.15s ease !important;
+    transition: all 0.15s ease;
   }
 
   [data-promptthis-trigger]:hover:not([data-theming-demo] *) {
-    background: #000 !important;
-    color: #fff !important;
-    transform: none !important;
+    background: #000;
+    color: #fff;
+    transform: none;
   }
 
   [data-promptthis-trigger]:hover:not([data-theming-demo] *) svg {
@@ -34,22 +61,22 @@
   }
 
   [data-promptthis-popover]:not([data-theming-demo] *) {
-    border-radius: 0 !important;
-    border: 2px solid #000 !important;
-    background: #000 !important;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1) !important;
+    border-radius: 0;
+    border: 2px solid #000;
+    background: #000;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1);
   }
 
   [data-promptthis-item]:not([data-theming-demo] *) {
-    color: #fff !important;
-    font-family: var(--font-sans) !important;
+    color: #fff;
+    font-family: var(--font-sans);
     font-size: 0.875rem;
-    padding: 0.75rem 1rem !important;
+    padding: 0.75rem 1rem;
   }
 
   [data-promptthis-item]:hover:not([data-theming-demo] *),
   [data-promptthis-item]:focus-visible:not([data-theming-demo] *) {
-    background: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.1);
   }
 }
 

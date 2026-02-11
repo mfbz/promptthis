@@ -1,12 +1,13 @@
 import { useMemo, useCallback, type RefObject } from "react";
 import {
   buildPrompt,
-  defaultProviders,
+  mergeProviders,
   copyToClipboard,
   canUseDeepLink,
   getProviderUrl,
   extractContent,
   type Provider,
+  type PromptConfig,
 } from "@promptthis/core";
 
 export interface UsePromptOptions {
@@ -36,10 +37,10 @@ export function usePrompt(options: UsePromptOptions) {
   }, [content, role, context, instruction]);
 
   const providers = useMemo(() => {
-    const all = [...defaultProviders, ...(customProviders || [])];
-    if (!openIn) return all;
+    const merged = mergeProviders(customProviders);
+    if (!openIn) return merged;
     return openIn
-      .map((id) => all.find((p) => p.id === id))
+      .map((id) => merged.find((p) => p.id === id))
       .filter((p): p is Provider => p !== undefined);
   }, [openIn, customProviders]);
 
@@ -50,9 +51,29 @@ export function usePrompt(options: UsePromptOptions) {
 
   const copy = useCallback(() => copyToClipboard(getPrompt()), [getPrompt]);
 
+  const getPromptForProvider = useCallback(
+    (providerId: string) => {
+      const provider = mergeProviders(customProviders).find(
+        (p) => p.id === providerId
+      );
+      if (provider?.formatPrompt) {
+        const text = resolveContent(content);
+        const config: PromptConfig = {
+          content: text,
+          role,
+          context,
+          instruction,
+        };
+        return provider.formatPrompt(config);
+      }
+      return getPrompt();
+    },
+    [content, role, context, instruction, customProviders, getPrompt]
+  );
+
   const openInProvider = useCallback(
     (providerId: string) => {
-      const currentPrompt = getPrompt();
+      const currentPrompt = getPromptForProvider(providerId);
       if (canUseDeepLink(currentPrompt)) {
         const url = getProviderUrl(providerId, currentPrompt, customProviders);
         if (url) window.open(url, "_blank");
@@ -63,7 +84,7 @@ export function usePrompt(options: UsePromptOptions) {
         });
       }
     },
-    [getPrompt, customProviders]
+    [getPromptForProvider, customProviders]
   );
 
   return { prompt, copy, openIn: openInProvider, providers };

@@ -1,3 +1,4 @@
+import React from "react";
 import { describe, it, expect, afterEach } from "vitest";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { PromptButton } from "../prompt-button";
@@ -23,6 +24,20 @@ describe("PromptButton", () => {
     expect(btn.getAttribute("aria-label")).toBe("Send to AI");
   });
 
+  it("renders icon-only when label is null", () => {
+    render(<PromptButton content="Test" label={null} />);
+    const btn = screen.getByRole("button");
+    expect(btn.querySelector("span")).toBeNull();
+    expect(btn.getAttribute("data-promptthis-icon-only")).toBe("");
+    expect(btn.getAttribute("aria-label")).toBe("Send to AI");
+  });
+
+  it("uses custom copyLabel", () => {
+    render(<PromptButton content="Test" copyLabel="Copiar" />);
+    fireEvent.click(screen.getByRole("button"));
+    expect(screen.getByText("Copiar")).toBeTruthy();
+  });
+
   it("shows popover on click", () => {
     render(<PromptButton content="Test" />);
     fireEvent.click(screen.getByRole("button"));
@@ -43,10 +58,10 @@ describe("PromptButton", () => {
     expect(screen.queryByText("ChatGPT")).toBeNull();
   });
 
-  it("includes Copy prompt option", () => {
+  it("includes Copy option", () => {
     render(<PromptButton content="Test" />);
     fireEvent.click(screen.getByRole("button"));
-    expect(screen.getByText("Copy prompt")).toBeTruthy();
+    expect(screen.getByText("Copy")).toBeTruthy();
   });
 
   it("closes popover on Escape", () => {
@@ -68,5 +83,24 @@ describe("PromptButton", () => {
     fireEvent.click(screen.getByRole("button"));
     const menu = screen.getByRole("menu");
     expect(menu.classList.contains("custom-popover")).toBe(true);
+  });
+
+  it("forwards style to trigger button", () => {
+    const style = { "--promptthis-bg": "red" } as React.CSSProperties;
+    render(<PromptButton content="Test" style={style} />);
+    const btn = screen.getByRole("button");
+    expect(btn.style.getPropertyValue("--promptthis-bg")).toBe("red");
+  });
+
+  it("forwards popoverStyle to popover", () => {
+    const popoverStyle = {
+      "--promptthis-popover-bg": "black",
+    } as React.CSSProperties;
+    render(<PromptButton content="Test" popoverStyle={popoverStyle} />);
+    fireEvent.click(screen.getByRole("button"));
+    const menu = screen.getByRole("menu");
+    expect(menu.style.getPropertyValue("--promptthis-popover-bg")).toBe(
+      "black"
+    );
   });
 });

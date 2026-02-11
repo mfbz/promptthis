@@ -28,7 +28,7 @@ export default function DemoPage() {
               <p className="text-lg text-neutral-600 leading-relaxed max-w-xl">
                 Every &ldquo;Ask AI&rdquo; widget puts a chatbot on your site.
                 This does the opposite: it sends your content to the
-                user&rsquo;s own AI tool, with author-crafted prompts.
+                user&rsquo;s own AI provider, with author-crafted prompts.
               </p>
             </header>
           </div>

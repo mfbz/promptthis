@@ -1,8 +1,28 @@
+import type { PromptConfig } from "./prompt";
+
 export interface Provider {
   id: string;
   name: string;
   icon: string;
   url: (prompt: string) => string;
+  formatPrompt?: (config: PromptConfig) => string;
+}
+
+export interface CreateProviderOptions {
+  id: string;
+  name: string;
+  icon?: string;
+  url: string | ((prompt: string) => string);
+  formatPrompt?: (config: PromptConfig) => string;
+}
+
+export function createProvider(options: CreateProviderOptions): Provider {
+  const { id, name, icon = "⬡", url, formatPrompt } = options;
+  const urlFn =
+    typeof url === "string"
+      ? (prompt: string) => url.replace("{prompt}", encodeURIComponent(prompt))
+      : url;
+  return { id, name, icon, url: urlFn, ...(formatPrompt && { formatPrompt }) };
 }
 
 export const defaultProviders: Provider[] = [
@@ -33,6 +53,11 @@ export const defaultProviders: Provider[] = [
       `https://www.perplexity.ai/search/?q=${encodeURIComponent(prompt)}`,
   },
 ];
+
+export function mergeProviders(customProviders?: Provider[]): Provider[] {
+  const all = [...(customProviders || []), ...defaultProviders];
+  return all.filter((p, i, arr) => arr.findIndex((x) => x.id === p.id) === i);
+}
 
 const providerMap = new Map(defaultProviders.map((p) => [p.id, p]));
 

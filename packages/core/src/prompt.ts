@@ -25,7 +25,7 @@ export function buildPrompt(config: PromptConfig): string {
   if (config.context) parts.push(config.context);
 
   const content = cleanContent(config.content);
-  parts.push(`---\nHere is the content:\n\n${content}\n\n---`);
+  parts.push(`<content>\n${content}\n</content>`);
 
   parts.push(config.instruction || DEFAULT_INSTRUCTION);
 

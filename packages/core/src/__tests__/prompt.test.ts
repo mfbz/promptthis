@@ -57,7 +57,7 @@ describe("buildPrompt", () => {
 
   it("trims content whitespace", () => {
     const result = buildPrompt({ content: "   Hello   " });
-    expect(result).toContain("---\nHere is the content:\n\nHello\n\n---");
+    expect(result).toContain("<content>\nHello\n</content>");
   });
 
   it("truncates content exceeding max length", () => {

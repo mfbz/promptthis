@@ -16,9 +16,9 @@ const geistPixel = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "PromptThis - The share button, but for AI.",
+  title: "PromptThis | The share button, but for AI.",
   description:
-    "Add a prompt button to any content. Visitors pick their AI tool and get a structured prompt. No API keys, no backend, no chatbot.",
+    "Add a prompt button to any content. Visitors pick their AI provider and get a structured prompt. No API keys, no backend, no chatbot.",
   metadataBase: new URL("https://promptthis.dev"),
   icons: {
     icon: [
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "PromptThis - The share button, but for AI.",
+    title: "PromptThis | The share button, but for AI.",
     description:
-      "Add a prompt button to any content. Visitors pick their AI tool and get a structured prompt. No API keys, no backend, no chatbot.",
+      "Add a prompt button to any content. Visitors pick their AI provider and get a structured prompt. No API keys, no backend, no chatbot.",
     type: "website",
     siteName: "PromptThis",
     images: [
@@ -44,9 +44,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PromptThis - The share button, but for AI.",
+    title: "PromptThis | The share button, but for AI.",
     description:
-      "Add a prompt button to any content. Visitors pick their AI tool and get a structured prompt.",
+      "Add a prompt button to any content. Visitors pick their AI provider and get a structured prompt.",
     images: ["/banner.png"],
   },
   robots: {

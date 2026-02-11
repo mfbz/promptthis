@@ -25,4 +25,14 @@ describe("PromptProvider", () => {
     expect(result.current.openIn).toBeUndefined();
     expect(result.current.defaultRole).toBeUndefined();
   });
+
+  it("provides copyLabel to consumers", () => {
+    const labelWrapper = ({ children }: { children: ReactNode }) => (
+      <PromptProvider copyLabel="Copiar">{children}</PromptProvider>
+    );
+    const { result } = renderHook(() => usePromptContext(), {
+      wrapper: labelWrapper,
+    });
+    expect(result.current.copyLabel).toBe("Copiar");
+  });
 });

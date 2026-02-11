@@ -7,6 +7,7 @@ export interface PromptContextValue {
   defaultContext?: string;
   defaultInstruction?: string;
   customProviders?: Provider[];
+  copyLabel?: string;
 }
 
 const PromptContext = createContext<PromptContextValue>({});
@@ -22,6 +23,7 @@ export function PromptProvider({
   defaultContext,
   defaultInstruction,
   customProviders,
+  copyLabel,
 }: PromptProviderProps) {
   const value = useMemo(
     () => ({
@@ -30,8 +32,16 @@ export function PromptProvider({
       defaultContext,
       defaultInstruction,
       customProviders,
+      copyLabel,
     }),
-    [openIn, defaultRole, defaultContext, defaultInstruction, customProviders]
+    [
+      openIn,
+      defaultRole,
+      defaultContext,
+      defaultInstruction,
+      customProviders,
+      copyLabel,
+    ]
   );
   return (
     <PromptContext.Provider value={value}>{children}</PromptContext.Provider>

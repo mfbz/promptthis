@@ -1,12 +1,13 @@
 import {
   buildPrompt,
-  defaultProviders,
   getProviderUrl,
   canUseDeepLink,
   copyToClipboard,
   extractContent,
   positionPopover,
+  mergeProviders,
   type Provider,
+  type PromptConfig,
 } from "@promptthis/core";
 
 // Sparkle SVG icon
@@ -16,49 +17,62 @@ const SPARKLE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="
 const CLIPBOARD_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>`;
 
 const STYLES = `
+@layer promptthis {
 [data-promptthis-target] { position: relative; }
 
 [data-promptthis-trigger] {
+  --_pt-bg: var(--promptthis-bg, #f5f5f5);
+  --_pt-text: var(--promptthis-text, inherit);
+  --_pt-border: var(--promptthis-border, rgba(0,0,0,0.08));
+  --_pt-radius: var(--promptthis-radius, 8px);
+  --_pt-shadow: var(--promptthis-shadow, 0 1px 2px rgba(0,0,0,0.04));
+  --_pt-hover-bg: var(--promptthis-hover-bg, #ebebeb);
+  --_pt-hover-text: var(--promptthis-hover-text, inherit);
   position: absolute; top: 8px; right: 8px;
   display: inline-flex; align-items: center; gap: 4px;
   padding: 5px 10px;
   font-family: inherit; font-size: 13px; font-weight: 500; line-height: 1;
-  color: var(--promptthis-text, inherit);
-  background: var(--promptthis-bg, #fff);
-  border: 1px solid var(--promptthis-border, #e5e7eb);
-  border-radius: var(--promptthis-radius, 999px);
+  color: var(--_pt-text);
+  background: var(--_pt-bg);
+  border: 1px solid var(--_pt-border);
+  border-radius: var(--_pt-radius);
   cursor: pointer; white-space: nowrap;
   opacity: 0; pointer-events: none;
-  transition: opacity .15s ease, transform .1s ease;
-  box-shadow: var(--promptthis-shadow, 0 2px 8px rgba(0,0,0,0.06));
+  transition: background .15s ease, color .15s ease, opacity .15s ease, transform .1s ease;
+  box-shadow: var(--_pt-shadow);
   z-index: 1;
 }
 [data-promptthis-trigger] svg { width: 14px; height: 14px; flex-shrink: 0; }
 [data-promptthis-trigger][data-promptthis-icon-only] { padding: 5px; }
 [data-promptthis-target]:hover > [data-promptthis-trigger],
 [data-promptthis-trigger]:focus-visible {
-  opacity: 0.7; pointer-events: auto;
+  opacity: 1; pointer-events: auto;
 }
-[data-promptthis-trigger]:hover { opacity: 1 !important; transform: scale(1.03); }
+[data-promptthis-trigger]:hover {
+  opacity: 1 !important;
+  background: var(--_pt-hover-bg);
+  color: var(--_pt-hover-text);
+  transform: scale(1.03);
+}
 [data-promptthis-trigger]:active { transform: scale(0.97); }
 @media (max-width: 640px) {
-  [data-promptthis-trigger] { opacity: 0.7; pointer-events: auto; }
+  [data-promptthis-trigger] { opacity: 1; pointer-events: auto; }
 }
 
 [data-promptthis-popover] {
+  --_pt-pop-bg: var(--promptthis-popover-bg, #fff);
+  --_pt-pop-border: var(--promptthis-popover-border, rgba(128,128,128,0.15));
+  --_pt-pop-radius: var(--promptthis-popover-radius, 10px);
+  --_pt-pop-shadow: var(--promptthis-popover-shadow, 0 4px 16px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05));
   position: absolute; top: calc(100% + 4px); right: 0; left: auto; bottom: auto;
   min-width: 180px; padding: 4px 0;
-  background: var(--promptthis-bg, #fff);
-  border: 1px solid var(--promptthis-border, rgba(128,128,128,0.15));
-  border-radius: var(--promptthis-popover-radius, 12px);
-  box-shadow: var(--promptthis-shadow, 0 4px 16px rgba(0,0,0,0.08));
+  background: var(--_pt-pop-bg);
+  border: 1px solid var(--_pt-pop-border);
+  border-radius: var(--_pt-pop-radius);
+  box-shadow: var(--_pt-pop-shadow);
   font-family: inherit;
   z-index: 10000;
   animation: promptthis-fade-in .12s ease;
-}
-@keyframes promptthis-fade-in {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 [data-promptthis-popover][data-side="top"] {
   top: auto; bottom: calc(100% + 4px);
@@ -67,25 +81,23 @@ const STYLES = `
 [data-promptthis-popover][data-align="start"] {
   right: auto; left: 0;
 }
-@keyframes promptthis-fade-in-up {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 
 [data-promptthis-item] {
+  --_pt-item-text: var(--promptthis-item-text, #1f2937);
+  --_pt-item-hover-bg: var(--promptthis-item-hover-bg, rgba(128,128,128,0.08));
   display: flex; align-items: center; gap: 10px;
   width: 100%; padding: 10px 14px;
   font-family: inherit; font-size: 14px;
-  color: var(--promptthis-text, #1f2937);
+  color: var(--_pt-item-text);
   background: transparent; border: none;
   cursor: pointer; text-align: left;
   transition: background .1s ease;
 }
 [data-promptthis-item]:hover,
 [data-promptthis-item]:focus-visible {
-  background: rgba(128,128,128,0.08);
+  background: var(--_pt-item-hover-bg);
 }
-[data-promptthis-item]:focus-visible { outline: none; background: rgba(128,128,128,0.12); }
+[data-promptthis-item]:focus-visible { outline: none; }
 [data-promptthis-item-icon] {
   display: inline-flex; align-items: center; justify-content: center;
   width: 20px; font-size: 15px; flex-shrink: 0;
@@ -120,28 +132,57 @@ const STYLES = `
     padding-bottom: env(safe-area-inset-bottom, 8px);
     animation: promptthis-slide-up .2s ease;
   }
-  @keyframes promptthis-slide-up {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
-  }
 }
 
 @media (prefers-color-scheme: dark) {
   [data-promptthis-trigger] {
-    --promptthis-bg: #1f2937;
-    --promptthis-text: #f9fafb;
-    --promptthis-border: #374151;
+    --_pt-bg: var(--promptthis-bg, #2a2a2a);
+    --_pt-border: var(--promptthis-border, rgba(255,255,255,0.1));
+    --_pt-shadow: var(--promptthis-shadow, 0 1px 2px rgba(0,0,0,0.2));
+    --_pt-hover-bg: var(--promptthis-hover-bg, #3a3a3a);
   }
   [data-promptthis-popover] {
-    --promptthis-bg: #1f2937;
-    --promptthis-text: #f9fafb;
-    --promptthis-border: rgba(255,255,255,0.1);
-    --promptthis-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    --_pt-pop-bg: var(--promptthis-popover-bg, #1f2937);
+    --_pt-pop-border: var(--promptthis-popover-border, rgba(255,255,255,0.1));
+    --_pt-pop-shadow: var(--promptthis-popover-shadow, 0 4px 16px rgba(0,0,0,0.3));
   }
-  [data-promptthis-item] { color: #f9fafb; }
-  [data-promptthis-item]:hover,
-  [data-promptthis-item]:focus-visible { background: rgba(255,255,255,0.08); }
+  [data-promptthis-item] {
+    --_pt-item-text: var(--promptthis-item-text, #f9fafb);
+    --_pt-item-hover-bg: var(--promptthis-item-hover-bg, rgba(255,255,255,0.08));
+  }
   [data-promptthis-toast] { background: #f9fafb; color: #1f2937; }
+}
+
+[data-theme="dark"] [data-promptthis-trigger] {
+  --_pt-bg: var(--promptthis-bg, #2a2a2a);
+  --_pt-border: var(--promptthis-border, rgba(255,255,255,0.1));
+  --_pt-shadow: var(--promptthis-shadow, 0 1px 2px rgba(0,0,0,0.2));
+  --_pt-hover-bg: var(--promptthis-hover-bg, #3a3a3a);
+}
+[data-theme="dark"] [data-promptthis-popover] {
+  --_pt-pop-bg: var(--promptthis-popover-bg, #1f2937);
+  --_pt-pop-border: var(--promptthis-popover-border, rgba(255,255,255,0.1));
+  --_pt-pop-shadow: var(--promptthis-popover-shadow, 0 4px 16px rgba(0,0,0,0.3));
+}
+[data-theme="dark"] [data-promptthis-item] {
+  --_pt-item-text: var(--promptthis-item-text, #f9fafb);
+  --_pt-item-hover-bg: var(--promptthis-item-hover-bg, rgba(255,255,255,0.08));
+}
+[data-theme="dark"] [data-promptthis-toast] { background: #f9fafb; color: #1f2937; }
+
+} /* end @layer promptthis */
+
+@keyframes promptthis-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes promptthis-fade-in-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes promptthis-slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -162,29 +203,29 @@ const STYLES = `
 
 const DARK_OVERRIDES = `
 [data-promptthis-trigger] {
-  --promptthis-bg: #1f2937; --promptthis-text: #f9fafb; --promptthis-border: #374151;
+  --_pt-bg: #2a2a2a; --_pt-border: rgba(255,255,255,0.1);
+  --_pt-shadow: 0 1px 2px rgba(0,0,0,0.2); --_pt-hover-bg: #3a3a3a;
 }
 [data-promptthis-popover] {
-  --promptthis-bg: #1f2937; --promptthis-text: #f9fafb;
-  --promptthis-border: rgba(255,255,255,0.1);
-  --promptthis-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  --_pt-pop-bg: #1f2937;
+  --_pt-pop-border: rgba(255,255,255,0.1);
+  --_pt-pop-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }
-[data-promptthis-item] { color: #f9fafb; }
-[data-promptthis-item]:hover, [data-promptthis-item]:focus-visible { background: rgba(255,255,255,0.08); }
+[data-promptthis-item] { --_pt-item-text: #f9fafb; --_pt-item-hover-bg: rgba(255,255,255,0.08); }
 [data-promptthis-toast] { background: #f9fafb; color: #1f2937; }
 `;
 
 const LIGHT_OVERRIDES = `
 [data-promptthis-trigger] {
-  --promptthis-bg: #fff; --promptthis-text: inherit; --promptthis-border: #e5e7eb;
+  --_pt-bg: #f5f5f5; --_pt-border: rgba(0,0,0,0.08);
+  --_pt-shadow: 0 1px 2px rgba(0,0,0,0.04); --_pt-hover-bg: #ebebeb;
 }
 [data-promptthis-popover] {
-  --promptthis-bg: #fff; --promptthis-text: #1f2937;
-  --promptthis-border: rgba(128,128,128,0.15);
-  --promptthis-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  --_pt-pop-bg: #fff;
+  --_pt-pop-border: rgba(128,128,128,0.15);
+  --_pt-pop-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
 }
-[data-promptthis-item] { color: #1f2937; }
-[data-promptthis-item]:hover, [data-promptthis-item]:focus-visible { background: rgba(128,128,128,0.08); }
+[data-promptthis-item] { --_pt-item-text: #1f2937; --_pt-item-hover-bg: rgba(128,128,128,0.08); }
 [data-promptthis-toast] { background: #1f2937; color: #f9fafb; }
 `;
 
@@ -194,7 +235,9 @@ interface PromptThisConfig {
   label?: string;
   defaultRole?: string;
   defaultContext?: string;
+  defaultInstruction?: string;
   customProviders?: Provider[];
+  copyLabel?: string;
 }
 
 declare global {
@@ -286,7 +329,8 @@ function createPopover(
   el: HTMLElement,
   prompt: string,
   providersToShow: Provider[],
-  copyOnly: boolean
+  copyOnly: boolean,
+  promptConfig?: PromptConfig
 ) {
   closeActivePopover();
 
@@ -307,7 +351,8 @@ function createPopover(
   copyIconSpan.setAttribute("data-promptthis-item-icon", "");
   copyIconSpan.innerHTML = CLIPBOARD_SVG;
   const copyLabelSpan = document.createElement("span");
-  copyLabelSpan.textContent = "Copy prompt";
+  const resolvedCopyLabel = config.copyLabel ?? "Copy";
+  copyLabelSpan.textContent = resolvedCopyLabel;
   copyBtn.appendChild(copyIconSpan);
   copyBtn.appendChild(copyLabelSpan);
 
@@ -335,11 +380,19 @@ function createPopover(
       item.appendChild(nameSpan);
 
       item.addEventListener("click", () => {
-        if (canUseDeepLink(prompt)) {
-          const url = getProviderUrl(p.id, prompt, config.customProviders);
+        const providerPrompt =
+          p.formatPrompt && promptConfig
+            ? p.formatPrompt(promptConfig)
+            : prompt;
+        if (canUseDeepLink(providerPrompt)) {
+          const url = getProviderUrl(
+            p.id,
+            providerPrompt,
+            config.customProviders
+          );
           if (url) window.open(url, "_blank");
         } else {
-          copyToClipboard(prompt).then(() => {
+          copyToClipboard(providerPrompt).then(() => {
             const url = getProviderUrl(p.id, "", config.customProviders);
             if (url) window.open(url, "_blank");
             showToast("Prompt copied \u2014 paste it in the chat");
@@ -446,7 +499,8 @@ function initElement(el: HTMLElement) {
   }
 
   btn.addEventListener("click", () => {
-    const instruction = el.getAttribute("data-prompt") || undefined;
+    const instruction =
+      el.getAttribute("data-prompt") || config.defaultInstruction || undefined;
     const role =
       el.getAttribute("data-prompt-role") || config.defaultRole || undefined;
     const context =
@@ -454,7 +508,8 @@ function initElement(el: HTMLElement) {
       config.defaultContext ||
       undefined;
     const content = extractContent(el);
-    const prompt = buildPrompt({ content, role, context, instruction });
+    const promptCfg = { content, role, context, instruction };
+    const prompt = buildPrompt(promptCfg);
 
     const copyOnly = el.hasAttribute("data-prompt-copy-only");
     const openInAttr = el.getAttribute("data-prompt-open-in");
@@ -462,17 +517,14 @@ function initElement(el: HTMLElement) {
       ? openInAttr.split(",").map((s) => s.trim())
       : config.openIn;
 
-    const allProviders = [
-      ...defaultProviders,
-      ...(config.customProviders || []),
-    ];
+    const allProviders = mergeProviders(config.customProviders);
     const providersToShow = openInList
       ? openInList
           .map((id) => allProviders.find((p) => p.id === id))
           .filter((p): p is Provider => !!p)
       : allProviders;
 
-    createPopover(btn, el, prompt, providersToShow, copyOnly);
+    createPopover(btn, el, prompt, providersToShow, copyOnly, promptCfg);
   });
 
   el.appendChild(btn);
