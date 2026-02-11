@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import logoIcon from "../public/logo-icon.svg";
 import { BookOpen } from "pixelarticons/fonts/react/BookOpen";
 import { Zap } from "pixelarticons/fonts/react/Zap";
 import { Sliders } from "pixelarticons/fonts/react/Sliders";
@@ -67,7 +68,7 @@ export function Sidebar() {
     <>
       <header className="fixed top-0 left-0 right-0 h-14 bg-white/90 backdrop-blur-xl border-b border-neutral-200 z-50 items-center justify-between px-5 hidden max-md:flex">
         <div className="flex items-center gap-2">
-          <Image src="/logo-icon.svg" alt="" width={20} height={20} />
+          <Image src={logoIcon} alt="" width={20} height={20} />
           <span className="text-[13px] font-bold tracking-tight">
             promptthis
           </span>
@@ -115,7 +116,7 @@ export function Sidebar() {
       >
         <div className="px-6 mb-2">
           <div className="flex items-center gap-2.5">
-            <Image src="/logo-icon.svg" alt="" width={24} height={24} />
+            <Image src={logoIcon} alt="" width={24} height={24} />
             <span className="text-[15px] font-bold tracking-tight">
               promptthis
             </span>
