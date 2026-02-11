@@ -337,6 +337,8 @@ Changesets automatically handles:
 - Publishing in dependency order (core → react → vanilla)
 - Generating `CHANGELOG.md` for each package
 
+Publishing is automated via GitHub Actions with [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) (OIDC) — no tokens needed. After merging to main, a "Version Packages" PR is created automatically. Merging that PR triggers the publish.
+
 ## Demo
 
 Run the interactive demo locally:

@@ -38,8 +38,18 @@ Uses [Changesets](https://github.com/changesets/changesets) for versioning and p
 - `npm run version` - Consume changesets: bump versions, update internal deps, generate CHANGELOGs
 - `npm run release` - Clean, build, test, then publish all packages to npm in dependency order
 - Config: `.changeset/config.json` (fixed versioning, public access, `main` base branch)
-- All packages are published with `--access public` (configured in changeset config)
 - Publish order is automatic: core → react → vanilla (topological)
+
+### GitHub workflow
+
+Automated via `.github/workflows/release.yml`:
+
+1. Create a changeset in your feature branch (`npx changeset`), commit it with your code
+2. Open PR → merge to main
+3. The GitHub Action opens a "Version Packages" PR (version bumps + changelogs)
+4. Merge that PR → the action publishes to npm automatically
+
+Uses npm Trusted Publishing (OIDC) — no tokens or secrets needed. Each package must be configured with a trusted publisher on npmjs.com (package settings → Trusted Publishers → add repo + workflow file `release.yml`).
 
 ## Key Design Decisions
 
