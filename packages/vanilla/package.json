@@ -1,7 +1,7 @@
 {
   "name": "@promptthis/vanilla",
   "version": "0.1.0",
-  "description": "The share button, but for AI. Drop-in script tag for any website.",
+  "description": "The share button, but for AI.",
   "type": "module",
   "main": "./dist/promptthis.js",
   "unpkg": "./dist/promptthis.global.js",
