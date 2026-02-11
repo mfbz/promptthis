@@ -1,8 +1,10 @@
 /* @promptthis/react - Optional default styles */
 /* Import with: import '@promptthis/react/styles.css' */
-/* All rules are in @layer promptthis so any Tailwind class or custom CSS overrides them naturally — no !important needed. */
+/* All rules are in @layer base. Data-attribute selectors beat element-level
+   resets (e.g. Tailwind preflight) via specificity, while @layer components
+   and @layer utilities still override naturally — no !important needed. */
 
-@layer promptthis {
+@layer base {
   [data-promptthis-trigger] {
     --_pt-bg: var(--promptthis-bg, #f5f5f5);
     --_pt-text: var(--promptthis-text, inherit);
@@ -35,8 +37,7 @@
     box-shadow: var(--_pt-shadow);
     transition:
       background 0.15s ease,
-      color 0.15s ease,
-      transform 0.1s ease;
+      color 0.15s ease;
   }
 
   [data-promptthis-trigger] svg {
@@ -52,11 +53,6 @@
   [data-promptthis-trigger]:hover {
     background: var(--_pt-hover-bg);
     color: var(--_pt-hover-text);
-    transform: scale(1.03);
-  }
-
-  [data-promptthis-trigger]:active {
-    transform: scale(0.97);
   }
 
   [data-promptthis-trigger]:focus-visible {

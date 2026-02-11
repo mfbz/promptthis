@@ -229,7 +229,10 @@ export function IconOnlySection() {
       title="Icon Only"
       description="Pass label={null} to render just the icon. Works with any theme."
     >
-      <div className="relative p-8 border-2 border-black bg-white mb-8 max-md:p-5">
+      <div
+        data-theming-demo=""
+        className="relative p-8 border-2 border-black bg-white mb-8 max-md:p-5"
+      >
         <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
           <Zap
             width="12"
@@ -494,6 +497,30 @@ export function ThemingSection() {
       description="Style with CSS custom properties via style and popoverStyle. No !important needed."
     >
       <div data-theming-demo="" className="flex flex-col gap-6">
+        <div className="relative border-2 border-black bg-white p-10 max-md:p-6">
+          <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
+            <Zap
+              width="12"
+              height="12"
+              overflow="visible"
+              className="fill-current"
+            />
+            LIVE
+          </div>
+          <span className="font-pixel text-[10px] tracking-widest text-neutral-400 uppercase block mb-2">
+            Default
+          </span>
+          <p className="text-sm text-neutral-600 leading-relaxed mb-2">
+            Zero configuration. Import the stylesheet and drop in a button.
+          </p>
+          <p className="text-xs text-neutral-400 leading-relaxed mb-6">
+            Neutral background, subtle border, 8px radius. Inherits your
+            page&rsquo;s font and text color. Override anything with CSS custom
+            properties.
+          </p>
+          <PromptButton content={SAMPLE_CONTENT} />
+        </div>
+
         <div className="grid grid-cols-2 gap-0.5 max-sm:grid-cols-1">
           <div className="relative border-2 border-black bg-white p-8 max-md:p-5">
             <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
@@ -506,7 +533,7 @@ export function ThemingSection() {
               LIVE
             </div>
             <span className="font-pixel text-[10px] tracking-widest text-neutral-400 uppercase block mb-4">
-              Default
+              Sharp
             </span>
             <p className="text-sm text-neutral-600 leading-relaxed mb-5">
               Sharp corners, inverted hover, dark popover.

@@ -17,7 +17,7 @@ const SPARKLE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="
 const CLIPBOARD_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>`;
 
 const STYLES = `
-@layer promptthis {
+@layer base {
 [data-promptthis-target] { position: relative; }
 
 [data-promptthis-trigger] {
@@ -38,7 +38,7 @@ const STYLES = `
   border-radius: var(--_pt-radius);
   cursor: pointer; white-space: nowrap;
   opacity: 0; pointer-events: none;
-  transition: background .15s ease, color .15s ease, opacity .15s ease, transform .1s ease;
+  transition: background .15s ease, color .15s ease, opacity .15s ease;
   box-shadow: var(--_pt-shadow);
   z-index: 1;
 }
@@ -52,9 +52,11 @@ const STYLES = `
   opacity: 1 !important;
   background: var(--_pt-hover-bg);
   color: var(--_pt-hover-text);
-  transform: scale(1.03);
 }
-[data-promptthis-trigger]:active { transform: scale(0.97); }
+[data-promptthis-trigger]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
 @media (max-width: 640px) {
   [data-promptthis-trigger] { opacity: 1; pointer-events: auto; }
 }
@@ -170,7 +172,7 @@ const STYLES = `
 }
 [data-theme="dark"] [data-promptthis-toast] { background: #f9fafb; color: #1f2937; }
 
-} /* end @layer promptthis */
+} /* end @layer base */
 
 @keyframes promptthis-fade-in {
   from { opacity: 0; transform: translateY(-4px); }
@@ -314,6 +316,7 @@ function announce(message: string) {
 
 function closeActivePopover() {
   if (!activePopover) return;
+  activePopover.trigger.setAttribute("aria-expanded", "false");
   activePopover.cleanup();
   activePopover.popover.remove();
   activePopover.backdrop?.remove();
@@ -463,6 +466,7 @@ function createPopover(
   };
 
   activePopover = { popover, trigger: btn, backdrop, cleanup };
+  btn.setAttribute("aria-expanded", "true");
 
   // Focus first item
   requestAnimationFrame(() => {
@@ -485,6 +489,8 @@ function initElement(el: HTMLElement) {
     "aria-label",
     label ? `${label} \u2014 send to AI` : "Send to AI"
   );
+  btn.setAttribute("aria-expanded", "false");
+  btn.setAttribute("aria-haspopup", "menu");
 
   const svgContainer = document.createElement("span");
   svgContainer.innerHTML = SPARKLE_SVG;

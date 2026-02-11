@@ -57,7 +57,7 @@ Uses npm Trusted Publishing (OIDC) — no tokens or secrets needed. Each package
 - React component ships no CSS by default. Users import `@promptthis/react/styles.css` for defaults or style via className.
 - Vanilla embeds CSS automatically (script tag users expect zero setup).
 - Default button: sparkle icon + "Prompt". Pass `label={null}` or `label=""` for icon-only. Inherits page font/color.
-- All default styles live in `@layer promptthis`, so any Tailwind class or custom CSS overrides them without `!important`. Two-tier custom property pattern: private `--_pt-*` variables read from public `--promptthis-*` with defaults.
+- All default styles live in `@layer base`. Data-attribute selectors beat Tailwind preflight via specificity within the same layer, while `@layer components` and `@layer utilities` override naturally — no `!important` needed. Two-tier custom property pattern: private `--_pt-*` variables read from public `--promptthis-*` with defaults.
 - `style` and `popoverStyle` props enable ergonomic CSS variable overrides via inline styles.
 - `copyLabel` prop allows localization. Resolved order: prop > PromptProvider context > default.
 - `createProvider()` helper in core simplifies custom provider creation (template string URLs, optional `formatPrompt`).
