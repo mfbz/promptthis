@@ -21,6 +21,29 @@
     "build": "tsup"
   },
   "license": "MIT",
+  "author": "mfbz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mfbz/promptthis",
+    "directory": "packages/vanilla"
+  },
+  "homepage": "https://github.com/mfbz/promptthis#readme",
+  "bugs": {
+    "url": "https://github.com/mfbz/promptthis/issues"
+  },
+  "keywords": [
+    "prompt",
+    "ai",
+    "vanilla",
+    "claude",
+    "chatgpt",
+    "gemini",
+    "perplexity",
+    "llm",
+    "share",
+    "widget",
+    "script"
+  ],
   "dependencies": {
     "@promptthis/core": "^0.1.0"
   }

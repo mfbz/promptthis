@@ -20,5 +20,25 @@
     "build": "tsup",
     "dev": "tsup --watch"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "author": "mfbz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mfbz/promptthis",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/mfbz/promptthis#readme",
+  "bugs": {
+    "url": "https://github.com/mfbz/promptthis/issues"
+  },
+  "keywords": [
+    "prompt",
+    "ai",
+    "claude",
+    "chatgpt",
+    "gemini",
+    "perplexity",
+    "llm",
+    "share"
+  ]
 }
