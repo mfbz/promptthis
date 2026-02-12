@@ -8,9 +8,9 @@ import {
 } from "../providers";
 
 describe("defaultProviders", () => {
-  it("includes claude, chatgpt, gemini, perplexity", () => {
+  it("includes claude, chatgpt, perplexity", () => {
     const ids = defaultProviders.map((p) => p.id);
-    expect(ids).toEqual(["claude", "chatgpt", "gemini", "perplexity"]);
+    expect(ids).toEqual(["claude", "chatgpt", "perplexity"]);
   });
 
   it("each provider has id, name, icon, url", () => {
@@ -29,7 +29,6 @@ describe("mergeProviders", () => {
     expect(result.map((p) => p.id)).toEqual([
       "claude",
       "chatgpt",
-      "gemini",
       "perplexity",
     ]);
   });
@@ -42,7 +41,7 @@ describe("mergeProviders", () => {
     });
     const result = mergeProviders([custom]);
     expect(result[0].id).toBe("myai");
-    expect(result).toHaveLength(5);
+    expect(result).toHaveLength(4);
   });
 
   it("custom provider overrides default with same id", () => {
@@ -53,7 +52,7 @@ describe("mergeProviders", () => {
     });
     const result = mergeProviders([custom]);
     expect(result.find((p) => p.id === "claude")?.name).toBe("My Claude");
-    expect(result).toHaveLength(4);
+    expect(result).toHaveLength(3);
   });
 });
 
@@ -100,14 +99,19 @@ describe("canUseDeepLink", () => {
   });
 
   it("returns false for very long prompts", () => {
-    const long = "A".repeat(2000);
+    const long = "A".repeat(20000);
     expect(canUseDeepLink(long)).toBe(false);
   });
 
   it("checks encoded length, not raw length", () => {
-    // Spaces encode to %20 (3 chars each), so 700 spaces = 2100 encoded chars
-    const spacey = " ".repeat(700);
+    // Spaces encode to %20 (3 chars each), so 6000 spaces = 18000 encoded chars > 16000
+    const spacey = " ".repeat(6000);
     expect(canUseDeepLink(spacey)).toBe(false);
+  });
+
+  it("accepts prompts within the 16000 limit", () => {
+    const medium = "A".repeat(10000);
+    expect(canUseDeepLink(medium)).toBe(true);
   });
 });
 

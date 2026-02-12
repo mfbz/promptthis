@@ -39,13 +39,6 @@ export const defaultProviders: Provider[] = [
     url: (prompt) => `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`,
   },
   {
-    id: "gemini",
-    name: "Gemini",
-    icon: "▲",
-    url: (prompt) =>
-      `https://gemini.google.com/app?q=${encodeURIComponent(prompt)}`,
-  },
-  {
     id: "perplexity",
     name: "Perplexity",
     icon: "◈",
@@ -71,7 +64,10 @@ export function getProviderUrl(
   return provider ? provider.url(prompt) : null;
 }
 
-const DEFAULT_MAX_ENCODED_LENGTH = 1800;
+// Max encoded prompt length for URL deep links.
+// Modern browsers support long URLs (Chrome ~2MB, Firefox ~65K, Safari ~80K).
+// We use 16000 to stay safely below server/proxy limits.
+const DEFAULT_MAX_ENCODED_LENGTH = 16000;
 
 export function canUseDeepLink(
   prompt: string,

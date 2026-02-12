@@ -26,7 +26,7 @@ import '@promptthis/react/styles.css'
 HOW IT WORKS:
 1. You embed a PromptButton next to any content
 2. You craft the prompt: role, context, instruction
-3. Visitor clicks, picks their AI provider (Claude, ChatGPT, Gemini, Perplexity)
+3. Visitor clicks, picks their AI provider (Claude, ChatGPT, Perplexity)
 4. Prompt opens directly in that tool or gets copied to clipboard
 
 WHY AUTHOR-CRAFTED PROMPTS?
@@ -50,7 +50,7 @@ export function HeroBanner() {
       <div className="max-w-[800px]">
         <p className="text-[15px] text-white/80 leading-relaxed mb-1">
           The share button, but for AI. You embed, you craft the prompt, and
-          visitors copy it or open it in Claude, ChatGPT, Gemini, or Perplexity.
+          visitors copy it or open it in Claude, ChatGPT, or Perplexity.
         </p>
         <p className="text-[13px] text-white/40 mb-5">
           Under 8KB. Zero dependencies. npm install @promptthis/react
@@ -147,7 +147,7 @@ export function BasicSection() {
       id="basic"
       number="01"
       title="Basic Usage"
-      description="Pass your content as a string. Visitors choose to copy the prompt or open it directly in Claude, ChatGPT, Gemini, or Perplexity."
+      description="Pass your content as a string. Visitors choose to copy the prompt or open it directly in Claude, ChatGPT, or Perplexity."
     >
       <div className="relative p-8 border-2 border-black bg-white mb-8 max-md:p-5">
         <div className="absolute -top-px -right-px font-pixel text-[10px] tracking-widest px-2.5 py-1 bg-black text-white flex items-center gap-1.5">
@@ -336,7 +336,7 @@ export function HookSection() {
   const { copy, openIn, providers } = usePrompt({
     content: SAMPLE_CONTENT,
     role: "You are a helpful coding assistant.",
-    openIn: ["claude", "chatgpt", "gemini"],
+    openIn: ["claude", "chatgpt", "perplexity"],
   });
 
   return (
@@ -389,7 +389,7 @@ import { usePrompt } from '@promptthis/react'
 const { copy, openIn, providers } = usePrompt({
   content: 'Your content here.',
   role: 'You are a helpful coding assistant.',
-  openIn: ['claude', 'chatgpt', 'gemini'],
+  openIn: ['claude', 'chatgpt', 'perplexity'],
 })
 
 <button onClick={() => copy()}>Copy prompt</button>
@@ -658,7 +658,7 @@ export function ProviderSection() {
         </div>
         <PromptProvider
           defaultRole="You are a documentation expert who explains things clearly and concisely."
-          openIn={["claude", "gemini"]}
+          openIn={["claude", "perplexity"]}
         >
           <p className="text-sm text-neutral-800 leading-relaxed mb-5">
             {SAMPLE_CONTENT}
@@ -677,7 +677,7 @@ import { PromptProvider, PromptButton } from '@promptthis/react'
 
 <PromptProvider
   defaultRole="You are a documentation expert."
-  openIn={['claude', 'gemini']}
+  openIn={['claude', 'perplexity']}
 >
   <PromptButton
     content="Inherits defaults from provider."

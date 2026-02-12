@@ -2,7 +2,7 @@
 
 > The share button, but for AI.
 
-The share button, but for AI. You embed a button, craft the prompt, and your visitors copy it or open it directly in Claude, ChatGPT, Gemini, or Perplexity. One click.
+The share button, but for AI. You embed a button, craft the prompt, and your visitors copy it or open it directly in Claude, ChatGPT, or Perplexity. One click.
 
 Under 8KB minified + gzipped. Zero dependencies.
 
@@ -51,22 +51,22 @@ A button appears on hover. Click it. Pick an AI provider. Done.
 
 ### `<PromptButton>`
 
-| Prop               | Type                               | Default       | Description                                                                             |
-| ------------------ | ---------------------------------- | ------------- | --------------------------------------------------------------------------------------- |
-| `content`          | `string \| RefObject<HTMLElement>` | required      | Text or ref to DOM element to extract content from                                      |
-| `role`             | `string`                           | -             | System role preamble (e.g. "You are a senior developer.")                               |
-| `context`          | `string`                           | -             | Additional context prepended before content                                             |
-| `instruction`      | `string`                           | -             | Instruction appended after content                                                      |
-| `openIn`           | `string[]`                         | all providers | Filter which AI providers to show (`'claude'`, `'chatgpt'`, `'gemini'`, `'perplexity'`) |
-| `label`            | `string \| null`                   | `'Prompt'`    | Button label. Pass `null` or `""` for icon-only                                         |
-| `icon`             | `ReactNode`                        | sparkle icon  | Custom icon element                                                                     |
-| `className`        | `string`                           | -             | Class for the trigger button                                                            |
-| `popoverClassName` | `string`                           | -             | Class for the popover menu                                                              |
-| `style`            | `CSSProperties`                    | -             | Inline styles for the trigger button (use for CSS variable overrides)                   |
-| `popoverStyle`     | `CSSProperties`                    | -             | Inline styles for the popover menu (use for CSS variable overrides)                     |
-| `copyLabel`        | `string`                           | `'Copy'`      | Label for the copy button in the popover                                                |
-| `onCopy`           | `(prompt: string) => void`         | -             | Callback when prompt is copied                                                          |
-| `onOpen`           | `(providerId: string) => void`     | -             | Callback when an AI provider is opened                                                  |
+| Prop               | Type                               | Default       | Description                                                                 |
+| ------------------ | ---------------------------------- | ------------- | --------------------------------------------------------------------------- |
+| `content`          | `string \| RefObject<HTMLElement>` | required      | Text or ref to DOM element to extract content from                          |
+| `role`             | `string`                           | -             | System role preamble (e.g. "You are a senior developer.")                   |
+| `context`          | `string`                           | -             | Additional context prepended before content                                 |
+| `instruction`      | `string`                           | -             | Instruction appended after content                                          |
+| `openIn`           | `string[]`                         | all providers | Filter which AI providers to show (`'claude'`, `'chatgpt'`, `'perplexity'`) |
+| `label`            | `string \| null`                   | `'Prompt'`    | Button label. Pass `null` or `""` for icon-only                             |
+| `icon`             | `ReactNode`                        | sparkle icon  | Custom icon element                                                         |
+| `className`        | `string`                           | -             | Class for the trigger button                                                |
+| `popoverClassName` | `string`                           | -             | Class for the popover menu                                                  |
+| `style`            | `CSSProperties`                    | -             | Inline styles for the trigger button (use for CSS variable overrides)       |
+| `popoverStyle`     | `CSSProperties`                    | -             | Inline styles for the popover menu (use for CSS variable overrides)         |
+| `copyLabel`        | `string`                           | `'Copy'`      | Label for the copy button in the popover                                    |
+| `onCopy`           | `(prompt: string) => void`         | -             | Callback when prompt is copied                                              |
+| `onOpen`           | `(providerId: string) => void`     | -             | Callback when an AI provider is opened                                      |
 
 ### `usePrompt` Hook
 
@@ -98,7 +98,7 @@ import { PromptProvider, PromptButton } from "@promptthis/react";
 
 <PromptProvider
   defaultRole="You are a helpful assistant."
-  openIn={["claude", "chatgpt", "gemini"]}
+  openIn={["claude", "chatgpt", "perplexity"]}
 >
   <App />
 </PromptProvider>;
