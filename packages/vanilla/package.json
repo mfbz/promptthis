@@ -1,6 +1,6 @@
 {
   "name": "@promptthis/vanilla",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The share button, but for AI.",
   "type": "module",
   "main": "./dist/promptthis.js",
@@ -48,6 +48,6 @@
     "script"
   ],
   "dependencies": {
-    "@promptthis/core": "^0.1.0"
+    "@promptthis/core": "^0.2.0"
   }
 }
