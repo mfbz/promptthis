@@ -100,14 +100,19 @@ describe("canUseDeepLink", () => {
   });
 
   it("returns false for very long prompts", () => {
-    const long = "A".repeat(2000);
+    const long = "A".repeat(20000);
     expect(canUseDeepLink(long)).toBe(false);
   });
 
   it("checks encoded length, not raw length", () => {
-    // Spaces encode to %20 (3 chars each), so 700 spaces = 2100 encoded chars
-    const spacey = " ".repeat(700);
+    // Spaces encode to %20 (3 chars each), so 6000 spaces = 18000 encoded chars > 16000
+    const spacey = " ".repeat(6000);
     expect(canUseDeepLink(spacey)).toBe(false);
+  });
+
+  it("accepts prompts within the 16000 limit", () => {
+    const medium = "A".repeat(10000);
+    expect(canUseDeepLink(medium)).toBe(true);
   });
 });
 
