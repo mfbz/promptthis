@@ -8,9 +8,9 @@ import {
 } from "../providers";
 
 describe("defaultProviders", () => {
-  it("includes claude, chatgpt, gemini, perplexity", () => {
+  it("includes claude, chatgpt, perplexity", () => {
     const ids = defaultProviders.map((p) => p.id);
-    expect(ids).toEqual(["claude", "chatgpt", "gemini", "perplexity"]);
+    expect(ids).toEqual(["claude", "chatgpt", "perplexity"]);
   });
 
   it("each provider has id, name, icon, url", () => {
@@ -29,7 +29,6 @@ describe("mergeProviders", () => {
     expect(result.map((p) => p.id)).toEqual([
       "claude",
       "chatgpt",
-      "gemini",
       "perplexity",
     ]);
   });
@@ -42,7 +41,7 @@ describe("mergeProviders", () => {
     });
     const result = mergeProviders([custom]);
     expect(result[0].id).toBe("myai");
-    expect(result).toHaveLength(5);
+    expect(result).toHaveLength(4);
   });
 
   it("custom provider overrides default with same id", () => {
@@ -53,7 +52,7 @@ describe("mergeProviders", () => {
     });
     const result = mergeProviders([custom]);
     expect(result.find((p) => p.id === "claude")?.name).toBe("My Claude");
-    expect(result).toHaveLength(4);
+    expect(result).toHaveLength(3);
   });
 });
 

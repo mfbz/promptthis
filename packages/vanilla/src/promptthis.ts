@@ -368,9 +368,6 @@ function createPopover(
           p.formatPrompt && promptConfig
             ? p.formatPrompt(promptConfig)
             : prompt;
-        const promptForUrl = canUseDeepLink(providerPrompt)
-          ? providerPrompt
-          : "";
         if (canUseDeepLink(providerPrompt)) {
           const url = getProviderUrl(
             p.id,

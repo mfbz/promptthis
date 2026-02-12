@@ -9,7 +9,7 @@ PromptThis: "The share button, but for AI."
 Every "Ask AI" widget puts a chatbot on your site. PromptThis does the opposite, it sends content to the user's own AI provider, with author-crafted prompts. The closest analogy is the social share button, but for AI providers instead of social networks.
 
 - **Author-side widget**: the content creator embeds the button and crafts the prompt (role, context, instructions)
-- **Exports TO external AI providers**: Claude, ChatGPT, Gemini, Perplexity. Not running AI on-site
+- **Exports TO external AI providers**: Claude, ChatGPT, Perplexity. Not running AI on-site
 - **Share sheet UX**: popover on desktop, bottom sheet on mobile
 - **Zero infrastructure**: no API keys, no backend, no accounts, no cost per query
 - **Under 8KB** minified + gzipped, zero dependencies

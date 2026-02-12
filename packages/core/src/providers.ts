@@ -39,13 +39,6 @@ export const defaultProviders: Provider[] = [
     url: (prompt) => `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`,
   },
   {
-    id: "gemini",
-    name: "Gemini",
-    icon: "▲",
-    url: (prompt) =>
-      `https://gemini.google.com/app?q=${encodeURIComponent(prompt)}`,
-  },
-  {
     id: "perplexity",
     name: "Perplexity",
     icon: "◈",

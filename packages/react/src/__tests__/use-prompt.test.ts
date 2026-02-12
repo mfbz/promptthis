@@ -24,7 +24,7 @@ describe("usePrompt", () => {
 
   it("returns all providers by default", () => {
     const { result } = renderHook(() => usePrompt({ content: "Test" }));
-    expect(result.current.providers).toHaveLength(4);
+    expect(result.current.providers).toHaveLength(3);
   });
 
   it("exposes copy function", () => {

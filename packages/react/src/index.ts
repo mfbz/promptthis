@@ -11,7 +11,6 @@ export {
   providerIcons,
   ClaudeIcon,
   OpenAIIcon,
-  GeminiIcon,
   PerplexityIcon,
   ClipboardIcon,
 } from "./icons";
